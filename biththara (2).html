@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>biththara.lk — Sinhala film ratings</title>
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+Sinhala:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0C1827; --orange:#F58A1F; --orange-soft:#FDE4CF;
+  --bg:#F2F4F8; --surface:#FFFFFF; --ink:#0C1827; --muted:#55627A; --line:#DCE1EA;
+  --yolk:#F2A900; --gold-ink:#8F5700; --stale-ink:#7C6A44; --fresh-ink:#8A5A00; --rot:#7E8C78; --rot-ink:#5A6756;
+  --btn:#0C1827; --btn-ink:#FFFFFF; --chip:#E7EBF2; --err:#C0392B;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#09111B; --surface:#111C2A; --ink:#E9EEF5; --muted:#9AA8BC; --line:#223045;
+    --gold-ink:#FFD04A; --stale-ink:#CDB892; --fresh-ink:#F2B93B; --rot-ink:#A5B29F; --btn:#F2A900; --btn-ink:#0C1827; --chip:#192638; --orange-soft:#3A2813; --err:#FF8A7A;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#09111B; --surface:#111C2A; --ink:#E9EEF5; --muted:#9AA8BC; --line:#223045;
+  --gold-ink:#FFD04A; --stale-ink:#CDB892; --fresh-ink:#F2B93B; --rot-ink:#A5B29F; --btn:#F2A900; --btn-ink:#0C1827; --chip:#192638; --orange-soft:#3A2813; --err:#FF8A7A;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Manrope','Noto Sans Sinhala',system-ui,sans-serif;font-size:16px;line-height:1.65}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--yolk);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:#fff}
+.top .wrap{display:flex;align-items:center;gap:16px;min-height:68px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+@media (min-width:1001px){.top .wrap{flex-wrap:nowrap;max-width:1280px}}
+@media (max-width:1000px){nav{order:3;width:100%;margin-left:0;overflow-x:auto}.search{max-width:none}}
+.logo{display:block;width:132px;aspect-ratio:324/101;background:#fff;
+  -webkit-mask:url(data:image/png;base64,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) center/contain no-repeat;
+  mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUQAAABlCAYAAAA1bZrhAAAUWklEQVR42u2dXWhd15XHf3b9MNwGN/OhJh3MzcW4zYCvJ82ArBKTphRZRUxMVWJIM0pVkpQ+WDHGDylCTillaiHSh2Bi6SETJ5NMRBrwEBkFRBURplNkxhUzkxAZQvAY+RKSuiqpJ+OIgXmZh70Pub0595699j7n3nPOXX8Qlu3ztc7Z+7/XWnt9gEKhUCgUCoVCoVAoFAqFQqFQKBQKhUKhUCgUrtiRw2eqAHuBffbv+4Fb7e/XgPft71eA68CWfkaFQlEmQqwBXwfuA0aF5zaAJeAScBHY1s+qUCiKSIjDwEMeJNgJc5YcV/XzKhSKvBNiBRgBpoBqhvdZB55RYlQoFHklxCFgGhjs4j2VGBUKRa4IsQKcBCZ7KOsC8BTF3YSpN/2um0kKRUEJsQb8ImPz2BUNYBZYLNA3mrDPHCfLPHAe3UhSKFLB5/qIDAG+APwt8CfAvwP/l/PvM4zZJGonyzDw58AbOpQVinDs7CMybMYkxq9Yy/n3ucXhmHFgQIeyQpFfQqwAZ3JKhhFGLWHXSvAdb9OhrFDklxCP0t2dZF9ULXFXdCgoFIpdGWmHsyldaw64jEnTi7AP2I1fVkscBoFHgbMF/o63Axs6nBWK/BHiSEpE+CzxoSXRxH8J4zs7BDwSqJFOA69S3FCWW3QoKxT5NJn3B55/DDjtSE5bmBCab2PCU9YD7vugDgeFQgkxbRwMOHcG/xjBVUxe9DFMjJ4Uh3P4fa44Hrdbh7JCkU9C9DVd14HnA++9bQn1CCYzpRvPnQcc0KGsUOSTEH3xDOllXGwBT1ht0RULOhwUTRjApEvW0SgEJcQALHuedzGDZ1nE+BZd8EsdDgpLfqeAt4EV+3MFGNNXo4Tog6sB5m4WWLWk2Egw1y8W+Dveq0M5VUslrgjJvJKiEqIPLnueN5ShnKvAd9uYxQ3gBMUukFDVoZyadtgptnUeTZNMQs0uHGNWEfnA/lwowsNnEYe45nneUUyl66ywifErngfuxOzMvm9NIq0WowC3zalRTAxsUTBgzf9Wi+gF+/uRmEXgOw5zsQK8KViMC7FpmQUhbmECq6W1D8ctWV3KWOZLXbhHWripHNVVuEzajwsm021t5Owk6ycO1/18GS2TrHaZfdXjM2qSfEarlZgqijBz+WFdpPobWRHiBu3r+HVCFZMHrWEOcmj6XhhGHDWet/vgXVzP4JqNIgieZRzis54vYRSz06ekqOimdjjlcNw6xct3z4tGe70ILytLQtwCnvQ8V0lRkUftsIiVyT/J6JxPyjgQdmV8/VVMfvJ0ACkeJ/+7wBXMDuWXMNV3bmDCjz6kOBs4/SBTHAYctcNIQ+wHbKd0jBJiDM4Cd+NXu3AUeAUTJ7iZ08n0YALhF62xVRll6oQf4r5b+k4fkGFWvr7f97vJ3Izj+Kf0DWJK/Q/l7N2NAUsO2m8VE9B7qgAugDLK1AlDuIeHzdAf8apZ+fo+UkL8Y/U6hBSrwGvkJ3XqcUsIkjisSUxlbimWSyhTXlwCZwTHF9Vc1v7dOSTENEiRnGglj+PnE8WeN5zDlbXbMuUBPxWQ/zrl8pt2wns5MK/7ghDTIsVJjF+x1iMTazrwGsdzaDaWTSYX18C44PgXVHcKNq+vKSFmR4qDmOo03TShpSZWp2fPi0ZVRpmSULeWhkQLWik4cfXL7nghCTEixccwjuoQzAM/75IJ7Rqr5qqV5QFllClpAXhOeM7L9Ffxj2v0MXpdMfsssqrWcRjHVN2op2xGDjeZ5a6ZDBKzvxemcdlkkuIZjwXgVdWb2uK9sgm0KwfPsIgJ9j0ToK1UrVlzjPDYuDpmR7sZy6Rf2aNGurGVN0soU5p4HHks7Azl2KV9j2L3DOobDTHCJUxdttAQk3k78EPwjZh/G81A5n0pX2+zhDKlhTHkG0eNPtUO31dCzAe2MH7FUDNumjC/4t0B95YQumt1GpeCu+sFk6mbGEa2iRLhScoTw3ejYNdVQmzCSxhnf4i2OI5/cQgfzWnZakeP2WdPMz5rzeF6bxRMpm6hjl916xlMHn5Z8N8Fu64SYgs27EQ8FjARu1Uxp2G12u2mZ58NvGbNajZjmMIKswnE9XrBZBqzZFXL8LsMIN9Rjt7nWRR9iV05f75FqyHN4l8cIuuKOS/HmFZXPCbvIWA/xpda7UBUVT7tibGWkVnXbZmWrEaWVjZIxY4Z6aZRtBC0e/YG8Gv73rN691lA4hfMW0XwirVQsN8m7ps294gJ6pG0qwAfM/ItTnhqKVmToq92tsdqSkcEZB8NhsEmktoqgUyT9mcdk5q5Efj8j3ouoL9OWHyr1h0TZbksYPp5l8m8zopopZCMo9YeMct2kV0si8kch5dI7q+chvksiepvEL+767LbOo1x9vvu9g7a1XCiT2Vqh5BUxHHhs4/bcXmBdONg+xljmLalIeNo1J5/AWHCwM6Cvayov7IvKZ50OO43Qo2inabULcySHGpURpnamVdnejAuIyI/RT6bpBWhMVYzEab5XV6z36WUhIjVXnxjFicdtA+JH2utzaR8uMvvZDqBQMooUztTuZetMSetqVbE6j8Rftvl+9WAcykTYdx3OediIe4s6EfbwjhYfTTF2QTzZpWwZPh7ejQpO5XhKqNMragTXrUnDVStGV1kUuyW5jmGKdIy2oVnjdxmHZHlpkod43fajenN0UkbuQJcRbbpsWXN5194TNbngG92uN8PMGX0D9M55Slu57WXpbB+hmmTudUnMjXj+zkjiyiediMHz/I/OXs3FUw9yvEu33fUWogvdYsQh5GVZW99IcvAr+yfLrunm5iMAmnwbdWaV2c7kO1Z+zMA3NZC7l+xpHIzRv5e5oxWLemd7ROZmp9xnPzhOYx7p9fhOXnqkFfD+Hl7NaZmgX+lTarrjpTYfoT2MUK+WABedFxhfSs+30N6xQiGrTZTzcGguyulSVgUmS6Q3+IFy5iwsV6ijntNR4lWO8Rni4a0w5x13byWg28yB5yO+4/PBV54yJqsfwd8IeWH/mvge8DtwFsJ5vQG8GX7I8H/0n5XVTLY/sGScsg7WMfETf2jNREb9h344A/IdpaLLFOddMuYpY0vA/8FvNvDZ/iinUsu+Cfgd47H/qngugcxLq484KC1KrfT0hArmBCWbtbASyrtVcM4aLulTQ0D3wo01ZIyTny17wbwtT6R6ZTjOIxap0qrZS9h+lHvAe4IeDdpae150hAl15ViCvi4zZwfxhQSCbFKY/nEhxB76QOYA57uoC2OId++n8LdBxmldD0SKP86ZsdrVXDfHwkn43dwC7cpskwDVvN0nQAIxscUcD5mrFWAo8izpmboXY50UQjRp9/3MH4FPGLNZmnYTc2ayL3y10zSOeNkEXl4yX0JH7xuifacnXzzKcj/ArJ0ry3gCWQtFwb7QKZDQtN9t+PxE+1MKvtv0Q6yJOxrmnwGbecFM9YCWBSet8qnuc4S7I37RwkhRmTYawd7UhreKY/rDcTI+m929VshLI0oDlFakTRW7ayAQA73gUxHHM+L4s8OOGqSLsS+gTxr6hCKuMVqJFB73kDeiuQvQgixAvyYfOw2RiR2ssPLWRBer3Wg3t8FWQetpnFOqDmcxS1LZ5A/Lq9VNpkqjoS+LtBcl4UayiayjYJHSkZmoYHZC8BDpBOrueYxVr0J8WigNrFgbfZj9mfG/ltI0dFJ2rchfVF4rf0tf7+jy+S+hCwJ/WnH4/aVWKa9Qu0QTGWaTnjWQ9ZNgXYyWDKzOSS+cca6TNKqQLWFvIiJFyHW8Su7tWB9Mfus4Kft6rtoNYInrM/gHvzbkc4TX2R0Q/hyDvZ4YFUx8Vmu5qarFvxXJZZpn+Ogb448WKV90eF1/OsxSjYW7lIrmWNks8Ek6QJ43ZcQpSlRDSvwE3YAJq0Am/bl3IN/wYY4vBCqPnugEaj1/gz3KtK/dDjmjhLLtN/h2LieyouYtM0Ja7VE1suJABm37TVc8JdKhsGdMdPA730IsYYsLKJhfSo+Am9icmal/r/xNmbIWg9e8nUr/4Ln+VVMSJNL3caLju+mrDLd6nDsux0IbNVaLZH1shn4ni47HneA/kXWZPgVwbFXfQjxfg8yDBlY28BPPM47lIJPoVmLecfz+Qcxm08/Qb7r1XyNEcd3JdGoyybTvQ7HXOniZL+CIglZkmFFaOld9iFESQ28J1NYZWvAKx7ntSteKklfa26h+UGADFFY0Ip1A/iYm1OOGtV/OhxTL6lMLjvmm12c7NeV73oKaSziW1JCrOEephElbodgGP+g77sDzZg40y3ynS17EshJOyG/6XGNquMHfr/PZcoTXNPy7kWRhXYoyWdv1yajIyF+VXCDZwMFitJvfOPk0ggwvt5iuh3B7IL7Fg64telaxz0IJO0g3jLKlCe49lSpokgbPxW+17bpmzs9zNBWzBCWtF7D7ESGYCGFl7rV5u+f97zeWgsZSQkki/p+ZZRJ0d/4uce4WvYhRNeQjVcDVd0znqtmw5rqE5idwqywz/O8tRgN7Tgy/1tdZQpCLYcTeBlFGhjCpIpKyXCqkwLXiRBdtrAbgdrhCHKf4QLGsf81TLhE1j1xv+VxTjuteRtTyt8Vt6tMQbiti/dyXWQ+yjnR3J7z5xu2WuFrHtyxjqlg1BadWgi43CykuOoA8tp0J/DPJvAxueseK1ADeL7D/0cZGS7XvSUDWcsoUzvcmdF4UfhhrOn3K7jlMEe1D/cQ3kTsBAmJIqE9VW4EnCtxsC8nqboZyfF9wfN9ZAkh8aVjMjJ65U8ri0wuBPwAfrXyssQN+hfzPbz3CA5hWKGEeDng3EcEE/M4fknghwLkcNGkGtZcjFY6V19mWr1vpc3jyygTCVbOUJe0xENdmDMKOVrHc0f0qi/zgKNJvh5Ahgg0lrgsg284nPckfqWL0vLTSHOVyySTa2rm0S6Nadf4wg+Vo7qGOUzMrPN47hUhupZuOhVAhpLdzNa8xgrJWToN/Dd00qpCI8ndLJtMrsQyTvsycWmhhnukxDsossYypt3EaSl/7OrRA3/JUaiQwpF/I3h5rS/tgMMAXwp4tsOOx91MIDjJLlvZZJIQyxQmVWszo/F8f8BYU6SrEa4S4CLZmaAtJGFPhsItBZ7/QMB97nQ4z9cXNCaY9FdS0LKvllQmSSGIKqZARSWDcTqA++7nEoosEUSGSYToElJzOKcvZlgwQdfaaFNZLAZ13HfaGgkajWvc23aJZZIQTFIvHl/8SHDsWo/mg8S/ewvFxXDoBXYGmiSDdDfzwBXHHY9bwD+U527h8TXgOcHxLyf8v0uB1OWSyyQlmIgU0yrjP4H7xl1oiqsiGZOh37YTIf6H4zVOetzXpTmNb0Meifl2PuDdjQoWgwHkTbqSajm6dJz7qOQybSFvP+HT76UdGUpaa7wuOHYIs6H4QdPPBTu2KxQXd2Eqhrv87MOvCMkPsyLEDdz8iKN2cEjgUkxzEHjcQ2WeF0zO0Pi0kw4DtGYn4KiQOC4lmKkuRLTWBzL9i4eMUb+XUx4EU8ekjknIcAa3DZ0Kn6alTcbMh3ngzRTIvAiI+l/PCc+bDLFak8JuXna8zqyQFDcdyXZaMGjHkGUlnErho0UmWL3N4B7D1CGUFq94JuH/XXfQP+wDmTY8Jk3z5HnTLry1BG04yqFdQd5Ww6UASsW+o6RrR2TeD6QIprSgtCDxad+bJYXdvI77DtoscB+mnaRLuMwS7RtEtQ7aI3Z1XG7xw1QwhR4eEmorcwnP+I6QQEbts/0K+BiTteCbxubSR9h1B/1qyWVqnjRH8KuaVLVjPBrnrXntoemIs7j5Dh8VjuEzVuay+yW37DuUpP0N2oV7UXqzHQ7H+NYbW2pjGt+0GuIwfnmmUY7tn+FXGLbhMJBquDU8ygITCeTh+mzrwLdLLlOrhTCfs8m8gFvq4wDwtsf1Z3Br5ymZa5JGUNLnviuAwM95zHfx/VwyVV70ePhROzhXYn4uWnP1Iv6l7Mfxr5J9wuElbSJrUJXmBErSpL7ueK03+kCmZqz0SL5OC+9Tjsf6VhJ/mP7B33tq5yK4EGKIj6aTGXzUU8gQHMN9I2WmBx/d5T27mpbv9olMEbZJxy+cFn4g0E58ExyqpBdClHdsIt91HkWYtumay/w0Yc3K27H37/BvbeljXkh8Cpe6TCDHSN6JHMI9pOhin8jUunhP5GDyThCWdipB2kVwd+eYFM97WAHzCCqnuxLiNqbnctrYa0kq67Lqrr6WVjxPd0q+u5K1ayT+Au1zZssoUzNWe0yKSf7StJF2+9M8E+I2ydEKcfhx2oQYqaxZDbTjGU7SKU8yjD7A8YwJxJWsB3DblYfO8YdllKkdKTa6PGF9ydC39WpoC48iYhV5UznnWOmdHg8zkuJAu5rhJG1gSgCFVkyOnm0ug497TEDWEsf7Sh/KFDdWj5BOR8YkLGPCv3w1wxXP8/K2q94tPOVxziwOAds+9RA3MEUXQ31RrSZQmpN0wU6GtColb2OCPUdIxwcXNcpadDxe0oh7ztG0LKNMrdjChL2MZESM61bzeIyw0mLbyH3pDcJST4uMLc8xe5qEJI8dgQ82ADyI2f6vCj/mdzsMoiFMoOygcHD+M58N3s4CA1YNf0D4jAuY3iNSTaIu0CJ8zbYyytSKGibERypjnEb4Cun7CiUxvyO4b9xI4hAl/vZuxiHGLahvIg/Gn6NDJsuOFD9mHZOQvYf4MvA3+LTe3orjil/HpHQdiBkoC03XfIvsin+6yn0IU0a+2vKM1zA+orXAweASmDpFOk2VyihT3GTeiylWvB+4FVOte7AN6V/DhP28nfGCe4rOflVRjxCPxUcSmA2m6ITL4tKwlmWaBXJrmOK8Ltl0M3bMftjJctyBokgYttrzQTsIG5i6lWuCRUZlyj+iUKTpFq10CY90NIVCoVAoFAqFQqFQKBQKhUKhUCgUCoUiVfw/L1IltjO3nMgAAAAASUVORK5CYII=) center/contain no-repeat}
+nav{display:flex;gap:2px;margin-left:8px;flex:none}
+nav a{padding:6px 12px;border-radius:999px;font-size:14.5px;color:#C5CEDB;white-space:nowrap}
+nav a:hover{color:#fff}
+nav a[aria-current="page"]{background:#fff;color:var(--navy);font-weight:700}
+.count[hidden]{display:none}
+.count{display:inline-block;min-width:20px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--yolk);color:var(--navy);font-size:12px;font-weight:800;text-align:center;line-height:20px}
+.search{margin-left:auto;position:relative;flex:1 1 120px;min-width:120px;max-width:340px}
+.search input{width:100%;height:42px;border-radius:999px;border:1px solid #2B3A52;background:#13233A;color:#fff;padding:0 16px 0 40px}
+.search input::placeholder{color:#8FA0B8}
+.search svg{position:absolute;left:14px;top:12px;width:18px;height:18px;stroke:#8FA0B8;fill:none;stroke-width:2}
+
+main{padding:32px 0 56px;min-height:70vh}
+h1,h2,h3{line-height:1.25;margin:0}
+h1{font-size:clamp(28px,4.4vw,44px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:22px;font-weight:800}
+.muted{color:var(--muted)}
+.sec{margin-top:44px}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+
+/* egg score */
+.egg{width:22px;height:26px;flex:none}
+.sc{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-variant-numeric:tabular-nums}
+.sc small{font-weight:500;color:var(--muted);font-size:12.5px}
+
+/* poster */
+.poster{container-type:inline-size;position:relative;display:block;width:100%;aspect-ratio:2/3;border-radius:6px;overflow:hidden;color:#fff;
+  background:linear-gradient(160deg,var(--c1),var(--c2))}
+.poster .pi{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:9cqw}
+.poster::before{content:"";position:absolute;left:50%;top:12%;width:62%;aspect-ratio:3/4;transform:translateX(-50%);
+  border:2px solid rgba(242,169,0,.55);border-radius:50% 50% 50% 50% / 62% 62% 38% 38%}
+.poster .yr{position:relative;font-weight:800;font-size:8cqw;letter-spacing:.04em;color:#F2A900}
+.poster .t{position:relative;font-weight:800;font-size:13cqw;line-height:1.15;margin-top:2cqw;letter-spacing:-.01em}
+.poster .e{position:relative;font-size:8cqw;opacity:.8;margin-top:2cqw}
+.poster .dm{position:absolute;top:7cqw;right:7cqw;font-size:6.5cqw;font-weight:700;background:rgba(255,255,255,.18);border-radius:999px;padding:.5cqw 4cqw}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:26px 20px}
+.card{display:block;min-width:0}
+.card .poster{transition:transform .15s}
+.card:hover .poster{transform:translateY(-3px)}
+.card h3{font-size:16px;font-weight:700;margin-top:10px;line-height:1.35}
+.card .meta{font-size:13.5px;color:var(--muted)}
+.card .scores{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:4px;font-size:15px}
+
+/* controls */
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 14px;cursor:pointer;font-size:14.5px}
+.chip[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink);border-color:var(--btn);font-weight:700}
+.sel{height:38px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:0 10px}
+.tog{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;margin-left:auto;cursor:pointer}
+.tog input{width:18px;height:18px;accent-color:var(--yolk)}
+.row2{margin-bottom:24px}
+
+
+/* trending bar */
+.trend{display:flex;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:16px;font-size:14px}
+.trend b{background:var(--orange);color:var(--navy);padding:7px 16px;font-weight:800;flex:none}
+.trend .items{display:flex;gap:28px;white-space:nowrap;overflow:hidden;padding:0 16px;color:var(--muted)}
+.trend a:hover{color:var(--ink);text-decoration:underline}
+
+/* hero carousel */
+.hero{position:relative;display:grid;border-radius:12px;overflow:hidden;color:#fff;background:var(--navy)}
+.slide{grid-area:1/1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:36px 48px 52px;
+  background:linear-gradient(110deg,var(--c1),var(--c2));opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
+.slide.on{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;right:-60px;top:-80px;width:420px;aspect-ratio:3/4;border:2px solid rgba(242,169,0,.28);border-radius:50% 50% 50% 50% / 62% 62% 38% 38%}
+.stext{position:relative;max-width:520px}
+.stext h2{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.stext .sm{margin:8px 0 14px;opacity:.85}
+.slide .pill{background:rgba(255,255,255,.16);color:#fff}
+.ss{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:20px}
+.ss .sc small{color:rgba(255,255,255,.75)}
+.btn.or{background:var(--orange);border-color:var(--orange);color:var(--navy)}
+.sposter{position:relative;width:150px;flex:none;box-shadow:0 12px 30px rgba(0,0,0,.45);border-radius:6px}
+.dots{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:8px;z-index:2}
+.dots button{width:9px;height:9px;padding:0;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer}
+.dots button[aria-current="true"]{background:#fff;width:26px;border-radius:5px}
+.legend.sm{justify-content:flex-end;margin-top:12px;font-size:13.5px;color:var(--muted)}
+.legend.sm .egg{width:16px;height:19px}
+
+/* sections and rows */
+.hsec{margin-top:40px}
+.shead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
+.shead p{margin:4px 0 0;color:var(--muted);font-size:14.5px;max-width:62ch}
+.seeall{flex:none;font-size:14px;font-weight:700;padding:2px 0;white-space:nowrap}
+.seeall:hover{color:var(--fresh-ink)}
+.rowwrap{position:relative}
+.scroller{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding-bottom:4px}
+.scroller::-webkit-scrollbar{display:none}
+.scroller .card{flex:0 0 150px;scroll-snap-align:start}
+.arrow{position:absolute;top:95px;width:34px;height:34px;border-radius:50%;border:0;background:var(--orange);color:var(--navy);font-size:22px;line-height:1;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.3);z-index:2}
+.arrow.r{right:-12px}.arrow.l{left:-12px}
+.arrow[hidden]{display:none}
+.card .egg{width:18px;height:21px}
+.split{display:grid;grid-template-columns:1fr 240px;gap:32px;align-items:start}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.gbtns{display:flex;flex-direction:column;gap:12px}
+.gbtn{height:44px;border-radius:10px;border:0;background:var(--orange-soft);color:var(--ink);font-weight:700;cursor:pointer}
+.gbtn[aria-pressed="true"]{background:var(--orange);color:var(--navy)}
+.seemore{display:flex;justify-content:center;margin-top:16px}
+.seemore a{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
+.seemore a::after{content:"›";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--orange);color:var(--navy);line-height:1}
+@media (max-width:720px){
+  .slide{padding:28px 22px 48px}
+  .sposter{display:none}
+  .split{grid-template-columns:1fr}
+  .gbtns{flex-direction:row;overflow-x:auto;order:-1;scrollbar-width:none}
+  .gbtn{flex:none;padding:0 18px}
+  .grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arrow.r{right:0}.arrow.l{left:0}
+}
+
+
+/* cast */
+.cast-sec{margin-top:36px}
+.cast{display:flex;gap:20px;overflow-x:auto;list-style:none;margin:14px 0 0;padding:4px 2px 10px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.cm{flex:0 0 112px;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px}
+.av{width:84px;height:84px;border-radius:50%;object-fit:cover;display:grid;place-items:center;
+  background:linear-gradient(160deg,var(--c1,#1B3A5C),var(--c2,#0C1827));color:#fff;font-weight:800;font-size:26px;border:2px solid var(--yolk)}
+.cm b{font-size:14.5px;line-height:1.3;margin-top:8px;font-weight:700}
+.cm span.rl{font-size:13px;color:var(--muted);line-height:1.3}
+
+
+/* account button, menu, modal */
+.acctwrap{position:relative;flex:none}
+.acct{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--orange);background:var(--orange);color:var(--navy);font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap}
+.acct svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;flex:none}
+.acct.in{background:transparent;border-color:#2B3A52;color:#fff;padding:3px 10px 3px 3px;gap:6px;height:44px;font-weight:700}
+.acct.in:hover{background:#13233A}
+.acct .ava{width:36px;height:36px;border-radius:50%;background:var(--yolk);color:var(--navy);display:grid;place-items:center;font-weight:800;font-size:14px}
+.acct .nick{display:none}
+.menu{position:absolute;right:0;top:calc(100% + 8px);width:230px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.35);padding:8px;z-index:30}
+.menu[hidden]{display:none}
+.menu .who{padding:8px 10px;font-size:13.5px;color:var(--muted);overflow-wrap:anywhere;border-bottom:1px solid var(--line);margin-bottom:6px}
+.menu .who b{display:block;color:var(--ink);font-size:15px}
+.menu a,.menu button{display:block;width:100%;text-align:left;padding:9px 10px;border:0;background:none;border-radius:8px;font-size:15px;cursor:pointer}
+.menu a:hover,.menu button:hover{background:var(--chip)}
+.modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;background:rgba(6,12,20,.62);overflow:auto}
+.modal[hidden]{display:none}
+.mcard{position:relative;width:100%;max-width:420px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.mcard h2{font-size:24px;margin:2px 40px 6px;text-align:center}
+.lead2{color:var(--muted);margin:0 0 20px;font-size:14.5px;text-align:center}
+.mx{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:0;background:none;color:var(--muted);font-size:24px;line-height:1;cursor:pointer}
+.mx:hover{background:var(--chip);color:var(--ink)}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--chip);border-radius:10px;padding:4px;margin-bottom:16px}
+.seg button{height:38px;border:0;background:none;border-radius:8px;font-weight:700;color:var(--muted);cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.field[hidden]{display:none}
+.pw{position:relative}
+.pw input{padding-right:68px}
+.pw button{position:absolute;right:6px;top:50%;transform:translateY(-50%);height:32px;padding:0 10px;border:0;background:none;color:var(--muted);font-weight:700;font-size:13.5px;cursor:pointer;border-radius:6px}
+.pw button:hover{color:var(--ink)}
+.mcard .btn{width:100%}
+.mcard .btn:disabled{opacity:.6;cursor:wait}
+.goog{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:46px;border-radius:8px;border:1px solid #DADCE0;background:#fff;color:#1F1F1F;font-weight:700;font-size:15px;cursor:pointer}
+.goog:hover{background:#F1F3F4}
+.goog:disabled{opacity:.6;cursor:wait}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13.5px;margin:16px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+.swap{margin:16px 0 0;text-align:center;font-size:14.5px;color:var(--muted)}
+.swap button{border:0;background:none;padding:0;color:var(--ink);font-weight:800;text-decoration:underline;cursor:pointer}
+@media (max-width:520px){
+  .acct .lbl{display:none}
+  .acct{padding:0 12px}
+  .mcard{padding:22px}
+}
+
+
+/* firebase additions */
+.cfgbar{background:#3A2813;color:#FDE4CF;text-align:center;padding:8px 16px;font-size:14px}
+.cfgbar[hidden]{display:none}
+.sc.none{color:var(--muted)}
+.panel[hidden]{display:none}
+.badge{display:inline-block;font-size:12px;font-weight:800;background:var(--yolk);color:var(--navy);border-radius:999px;padding:0 8px;line-height:20px;vertical-align:middle}
+.badge.you{background:var(--chip);color:var(--ink)}
+.menu .badge{margin-left:6px}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.poster.hasimg::before{display:none}
+.notice{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:16px 18px;margin:16px 0}
+.status{display:inline-block;font-size:13.5px;font-weight:700;border-radius:999px;padding:2px 12px;background:var(--chip)}
+.fp{text-align:right;margin:-6px 0 8px}
+.fp[hidden]{display:none}
+.linkbtn{border:0;background:none;padding:0;color:var(--muted);font-size:13.5px;font-weight:700;text-decoration:underline;cursor:pointer}
+.linkbtn:hover{color:var(--ink)}
+.apply{max-width:640px}
+.apply .panel{margin-top:20px}
+.apply ul.links{margin:6px 0 0;padding-left:18px;overflow-wrap:anywhere}
+
+
+/* trailers, coming soon, videos */
+.ytw{container-type:inline-size;width:100%}
+.yt{--yh:min(56.25cqw,480px);position:relative;display:flex;justify-content:center;width:100%;height:var(--yh);background:#000;border-radius:16px;overflow:hidden}
+.yt iframe{flex:none;height:var(--yh);width:min(100%,calc(var(--yh)*1.7778));border:0;background:#000}
+.ytplay{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;background:#120405;cursor:pointer}
+.ytplay img{width:100%;height:100%;object-fit:cover;opacity:.85;display:block}
+.ytbtn{position:absolute;left:50%;top:50%;width:68px;height:48px;transform:translate(-50%,-50%);transition:transform .15s}
+.ytplay:hover .ytbtn{transform:translate(-50%,-50%) scale(1.08)}
+.ytnote{display:grid;place-items:center;width:100%;padding:24px;text-align:center;color:#fff;background:#120405;font-size:14.5px;line-height:1.55}
+.ytnote b{font-weight:800}
+.ythelp{margin:10px 0 0;font-size:13.5px;color:var(--muted)}
+.ythelp[hidden]{display:none}
+.ythelp a{font-weight:700;text-decoration:underline}
+.vstage .ythelp{color:rgba(255,255,255,.88);margin-top:12px}
+.vstage .ythelp .linkbtn{color:#fff}
+.trailer-top{margin:0 0 28px}
+.soon{display:inline-block;font-size:13.5px;font-weight:800;background:var(--orange);color:var(--navy);border-radius:999px;padding:2px 12px;margin-bottom:12px}
+.redband{position:relative;overflow:hidden;margin-top:48px;padding:28px 28px 32px;border-radius:16px;color:#fff;background:linear-gradient(135deg,#D3202A 0%,#8E0F16 100%)}
+.redband::before{content:"";position:absolute;right:-90px;top:-110px;width:360px;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none}
+.redband>*{position:relative}
+.redband h2{color:#fff;font-size:24px}
+.redband .shead p{color:rgba(255,255,255,.88)}
+.redband .seeall{color:#fff}
+.redband .seeall:hover{color:#fff;text-decoration:underline}
+.redband .vcard h3{color:#fff}
+.redband .vmeta,.redband .sc small{color:rgba(255,255,255,.82)}
+.redband .egg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.25))}
+.vcard{display:block;min-width:0}
+.vthumb{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#2A0A0D}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.vcard:hover .vthumb img{transform:scale(1.04)}
+.pbadge{position:absolute;left:10px;bottom:10px;width:34px;height:34px;border-radius:50%;background:#E0242B;color:#fff;display:grid;place-items:center;font-size:13px;padding-left:2px}
+.vcard h3{font-size:16px;font-weight:700;margin-top:10px;line-height:1.35}
+.vmeta{font-size:13.5px;color:var(--muted)}
+.vcard .scores{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:4px;font-size:15px}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px 20px}
+.scroller .vcard{flex:0 0 260px;scroll-snap-align:start}
+.rowwrap.v .arrow{top:62px}
+.vhero{position:relative;overflow:hidden;border-radius:16px;padding:32px 28px;color:#fff;background:linear-gradient(135deg,#D3202A,#7A0B12);margin-bottom:28px}
+.vhero::before{content:"";position:absolute;right:-70px;top:-90px;width:300px;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.08)}
+.vhero>*{position:relative}
+.vhero h1{color:#fff}
+.vhero p{margin:8px 0 0;color:rgba(255,255,255,.9);max-width:56ch}
+.vstage{border-radius:16px;padding:20px;background:linear-gradient(180deg,#C21A23,#6E0A10)}
+.vstage .yt{box-shadow:0 14px 40px rgba(0,0,0,.45)}
+.vtheme .btn:not(.ghost):not(.or){background:#E0242B;border-color:#E0242B;color:#fff}
+.vtheme .star.on,.vtheme .rev .st{color:#E0242B}
+.vtheme .back{color:var(--muted)}
+@media (max-width:720px){.redband{padding:22px 18px 26px}.scroller .vcard{flex-basis:230px}}
+
+/* intro */
+.intro{display:flex;flex-wrap:wrap;gap:20px 48px;align-items:end;justify-content:space-between}
+.intro p{margin:10px 0 0;max-width:46ch;color:var(--muted)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:14.5px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+/* lead */
+.lead{display:grid;grid-template-columns:minmax(150px,230px) 1fr;gap:32px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:28px;margin-top:28px}
+.lead .info{align-self:center}
+.lead h2{font-size:clamp(26px,3.6vw,38px);letter-spacing:-.01em}
+.lead .note{max-width:52ch;margin:10px 0 18px}
+.pill{display:inline-block;font-size:13.5px;background:var(--chip);border-radius:999px;padding:2px 12px;margin-bottom:12px}
+
+.meters{display:flex;gap:36px;flex-wrap:wrap;margin:6px 0 4px}
+.meter .big{display:flex;align-items:center;gap:10px;font-size:44px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.meter .big .egg{width:36px;height:42px}
+.meter .lbl{font-weight:700;margin-top:4px}
+.meter .sub{font-size:13.5px;color:var(--muted)}
+.verdict{font-size:13.5px;font-weight:700;margin-left:6px}
+.verdict.golden{color:var(--gold-ink)} .verdict.fresh{color:var(--fresh-ink)} .verdict.stale{color:var(--stale-ink)} .verdict.rotten{color:var(--rot-ink)}
+.legend{flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:8px;border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+
+/* detail */
+.back{display:inline-block;margin-bottom:18px;color:var(--muted);font-size:15px}
+.back:hover{color:var(--ink)}
+.detail{display:grid;grid-template-columns:minmax(160px,280px) 1fr;gap:36px}
+.detail .sub-t{color:var(--muted);margin:4px 0 0;font-size:18px}
+.facts{margin:16px 0;font-size:15.5px;color:var(--muted)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tags span{font-size:13.5px;background:var(--chip);border-radius:999px;padding:1px 12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;margin-top:28px}
+.stars{display:flex;gap:4px;margin:6px 0 16px}
+.star{background:none;border:0;cursor:pointer;padding:2px;font-size:34px;line-height:1;color:var(--line)}
+.star.on{color:var(--yolk)}
+.field{display:block;margin-bottom:14px}
+.field span{display:block;font-size:14.5px;font-weight:700;margin-bottom:4px}
+.field input,.field textarea{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px}
+.field textarea{min-height:110px;resize:vertical}
+.err{color:var(--err);font-size:14.5px;min-height:22px;margin:0 0 8px}
+.rev{border-top:1px solid var(--line);padding:16px 0}
+.rev:first-child{border-top:0}
+.rev .who{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:14.5px}
+.rev .st{color:var(--yolk);letter-spacing:2px}
+.rev p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{padding:36px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+
+/* top list */
+.rank{list-style:none;margin:0;padding:0}
+.rank li{display:grid;grid-template-columns:44px 64px 1fr auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.rank li:first-child{border-top:0}
+.rank .n{font-size:26px;font-weight:800;color:var(--muted);text-align:center}
+.rank .poster{border-radius:4px}
+.rank .poster .pi,.rank .poster .dm{display:none}
+.rank .poster::before{top:22%;width:60%}
+.rank h3{font-size:18px}
+.rank .two{display:flex;gap:22px;flex-wrap:wrap;justify-content:flex-end}
+
+.foot{background:var(--navy);color:#C5CEDB;font-size:14.5px}
+.foot .wrap{padding-top:44px;padding-bottom:24px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+.foot .logo{width:120px}
+.foot .tag{margin:14px 0 0;max-width:30ch;line-height:1.6}
+.foot h4{margin:0 0 12px;font-size:15px;font-weight:800;color:#fff}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a:hover{color:#fff;text-decoration:underline}
+.fbar{margin-top:36px;padding-top:18px;border-top:1px solid #22314A;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13.5px;color:#8FA0B8}
+.about{max-width:68ch}
+.about h2{margin:32px 0 8px}
+.about p{margin:0 0 12px}
+@media (max-width:720px){.fgrid{grid-template-columns:1fr 1fr}.fgrid>div:first-child{grid-column:1/-1}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:80}
+.toast.show{opacity:1}
+
+@media (max-width:720px){
+  .lead,.detail{grid-template-columns:1fr}
+  .lead .poster,.detail .poster{max-width:200px}
+  .lead{padding:20px}
+  .rank li{grid-template-columns:32px 52px 1fr}
+  .rank .two{grid-column:2/4;justify-content:flex-start}
+  nav{order:3;width:100%;margin-left:0;overflow-x:auto}
+  .search{max-width:none}
+  .tog{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="eggold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE27A"/><stop offset=".55" stop-color="#F6B200"/><stop offset="1" stop-color="#D98A00"/></linearGradient></defs></svg>
+<header class="top">
+  <div class="wrap">
+    <a href="#/" aria-label="biththara.lk home"><span class="logo" role="img" aria-label="biththara.lk"></span></a>
+    <nav aria-label="Main">
+      <a href="#/" data-nav="">Home</a>
+      <a href="#/films" data-nav="films">Movies</a>
+      <a href="#/coming-soon" data-nav="soon">Coming soon</a>
+      <a href="#/videos" data-nav="videos">Videos</a>
+      <a href="#/top" data-nav="top">Top rated</a>
+      <a href="#/list" data-nav="list">My list<span class="count" id="wcount" hidden>0</span></a>
+    </nav>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>
+      <input id="q" type="search" placeholder="Search films, directors, years" aria-label="Search" autocomplete="off">
+    </div>
+    <div class="acctwrap" id="acctwrap"></div>
+  </div>
+</header>
+<div class="cfgbar" id="cfgbar" hidden>Firebase is not set up yet. Paste your <b>firebaseConfig</b> into this file to turn on accounts, reviews and cast data.</div>
+
+<main><div class="wrap" id="view"></div></main>
+
+<footer class="foot"><div class="wrap">
+  <div class="fgrid">
+    <div>
+      <a href="#/" aria-label="biththara.lk home"><span class="logo" role="img" aria-label="biththara.lk"></span></a>
+      <p class="tag">Ratings and reviews for Sinhala films, from critics and audiences.</p>
+    </div>
+    <div><h4>Browse</h4><ul>
+      <li><a href="#/">Home</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="">Movies</a></li>
+      <li><a href="#/coming-soon">Coming soon</a></li>
+      <li><a href="#/videos">Videos</a></li>
+      <li><a href="#/top">Top rated</a></li>
+      <li><a href="#/list">My list</a></li>
+    </ul></div>
+    <div><h4>Genres</h4><ul>
+      <li><a href="#/films" data-sort="score" data-genre="Drama">Drama</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Romance">Romance</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Comedy">Comedy</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Thriller">Thriller</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Historical">Historical</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Family">Family</a></li>
+    </ul></div>
+    <div><h4>About</h4><ul>
+      <li><a href="#/about">How scores work</a></li>
+      <li><a href="#/apply-critic">Apply to be a critic</a></li>
+    </ul></div>
+  </div>
+  <div class="fbar"><span>© 2026 biththara.lk. All rights reserved.</span><span>Rate it. Review it. Find your next film.</span></div>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal" id="authm" hidden>
+  <div class="mcard" role="dialog" aria-modal="true" aria-labelledby="amt">
+    <button class="mx" id="amx" type="button" aria-label="Close">×</button>
+    <h2 id="amt">Welcome back</h2>
+    <p class="lead2" id="ams">Log in to rate films and write reviews.</p>
+    <div class="seg" role="tablist" aria-label="Account">
+      <button type="button" role="tab" id="tab-login" aria-selected="true" data-m="login">Log in</button>
+      <button type="button" role="tab" id="tab-signup" aria-selected="false" data-m="signup">Sign up</button>
+    </div>
+    <button class="goog" id="agoog" type="button">
+      <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <span>Continue with Google</span>
+    </button>
+    <div class="or" aria-hidden="true">or use your email</div>
+    <form id="af" novalidate>
+      <label class="field" id="fn" hidden><span>Nickname</span><input id="an" maxlength="24" autocomplete="nickname"></label>
+      <label class="field"><span>Email</span><input id="ae" type="email" autocomplete="email" inputmode="email"></label>
+      <label class="field"><span>Password</span>
+        <div class="pw"><input id="ap" type="password" autocomplete="current-password"><button type="button" id="apt" aria-label="Show password">Show</button></div>
+      </label>
+      <div class="fp" id="afpw"><button type="button" class="linkbtn" id="afp">Forgot password?</button></div>
+      <p class="err" id="aer" role="alert"></p>
+      <button class="btn" type="submit" id="asub">Log in</button>
+    </form>
+    <p class="swap" id="asw"></p>
+  </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* ---------- DATA ----------
+   Everything is stored in Firestore and managed from admin.html:
+   films/{id}   en, si, y, dir, g[], note, cast[], c[2], poster, status ('released' | 'unreleased'), releaseDate, trailer (YouTube video id)
+   videos/{id}  yt (YouTube video id), title, channel, desc      (id is always "v-" + the YouTube id)
+   reviews/{filmId_uid}  ratings for films AND videos; scores are calculated from these only. */
+let FILMS=[], BY={}, VIDEOS=[], VBY={};
+const GENRES=['Drama','Romance','Comedy','Thriller','Historical','Family'];
+
+/* ---------- FIREBASE ----------
+   1. Create a project at console.firebase.google.com and add a Web app.
+   2. Paste the config it gives you below.
+   3. Enable Authentication > Email/Password (and Google, optional) and create a Firestore database.
+   4. Publish the rules from firestore.rules. */
+const firebaseConfig={
+  apiKey: "AIzaSyD5pun5EX5UXayD5rJaNq7MtU8Ut1PQqFo",
+  authDomain: "biththara.firebaseapp.com",
+  projectId: "biththara",
+  storageBucket: "biththara.firebasestorage.app",
+  messagingSenderId: "3760486347",
+  appId: "1:3760486347:web:667385dc4b3bb05995684e",
+  measurementId: "G-24D13W3ED6"
+};
+const ADMIN_EMAILS=['dilshanmadumesha175@gmail.com'];   // must match the admin email in firestore.rules
+const ADMIN_URL='admin.html';
+const NO_FB='Firebase is not configured yet. Add your firebaseConfig to the code to turn this on.';
+let auth=null, db=null;
+try{
+  if(window.firebase&&!/YOUR_/.test(firebaseConfig.apiKey)){firebase.initializeApp(firebaseConfig);auth=firebase.auth();db=firebase.firestore();}
+}catch(e){console.error('Firebase init failed',e);}
+const LIVE=!!db;
+const TS=()=>firebase.firestore.FieldValue.serverTimestamp();
+const FV=()=>firebase.firestore.FieldValue;
+
+/* guests keep their list in this browser; logged-in users keep it in Firestore */
+const KEY='biththara:v1'; const S={watch:[]};
+try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&Array.isArray(r.watch))S.watch=r.watch;}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({watch:S.watch}));}catch(e){}}
+
+/* live state */
+let USER=null, P=null, AUTH_READY=!auth, REVIEWS=[], STATS={}, REV_READY=!db, FDOCS={}, VDOCS={}, FILMS_READY=!db, VIDEOS_READY=!db;
+
+/* ---------- HELPERS ---------- */
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=s=>document.querySelector(s);
+const view=$('#view');
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2600);}
+const plural=(n,w)=>n+' '+w+(n===1?'':'s');
+const curRoute=()=>(location.hash.slice(2)||'').split('/')[0];
+
+const emailOf=()=>USER&&USER.email?USER.email.toLowerCase():'';
+const isAdmin=()=>!!USER&&((P&&P.role==='admin')||(USER.emailVerified&&ADMIN_EMAILS.map(e=>e.toLowerCase()).includes(emailOf())));
+const myRole=()=>isAdmin()?'admin':((P&&P.role)||'user');
+const nickOf=()=>(P&&P.nick)||(USER&&(USER.displayName||(USER.email||'').split('@')[0]))||'Anonymous';
+const watchList=()=>USER?((P&&P.watch)||[]):S.watch;
+const inList=id=>watchList().includes(id);
+
+function computeStats(){
+  const st={};
+  for(const r of REVIEWS){
+    const o=st[r.filmId]||(st[r.filmId]={cN:0,cPos:0,aN:0,aPos:0});
+    if(r.role==='critic'){o.cN++;if(r.stars>=4)o.cPos++;}else{o.aN++;if(r.stars>=4)o.aPos++;}
+  }
+  STATS=st;
+}
+/* scores come only from real reviews: % of reviews with 4 or 5 stars. 60% or more = Fresh. */
+function critic(f){const s=STATS[f.id]||{cN:0,cPos:0};return {pct:s.cN?Math.round(s.cPos/s.cN*100):null,n:s.cN};}
+function audience(f){const s=STATS[f.id]||{aN:0,aPos:0};return {pct:s.aN?Math.round(s.aPos/s.aN*100):null,n:s.aN};}
+const avg=f=>{const c=critic(f).pct,a=audience(f).pct;if(c==null&&a==null)return -1;if(c==null)return a;if(a==null)return c;return (c+a)/2;};
+
+/* four rating levels (percent of 4-5 star reviews):
+   Golden 80%+ (needs at least GOLDEN_MIN reviews), Fresh 60-79%, Stale 40-59%, Rotten below 40% */
+const GOLDEN_MIN=5;
+const TIERS=[['golden','Golden','80% and up'],['fresh','Fresh','60–79%'],['stale','Stale','40–59%'],['rotten','Rotten','below 40%']];
+const tierName=t=>(TIERS.find(x=>x[0]===t)||[])[1]||'';
+function tierOf(p,n){
+  if(p==null) return null;
+  if(p>=80&&n>=GOLDEN_MIN) return 'golden';
+  if(p>=60) return 'fresh';
+  if(p>=40) return 'stale';
+  return 'rotten';
+}
+const EGG='<path d="M12 1.5C7.2 1.5 3.5 9.5 3.5 16a8.5 8.5 0 0 0 17 0C20.5 9.5 16.8 1.5 12 1.5Z"';
+function eggTier(t){
+  const hd='<svg class="egg" viewBox="0 0 24 28" aria-hidden="true">', shine='<path d="M8.2 9c.8-2.4 2-4 3.2-4.8" stroke="#fff" stroke-linecap="round" fill="none"';
+  if(t==='golden') return `${hd}${EGG} fill="url(#eggold)" stroke="#9A5F00" stroke-width="1"/>${shine} stroke-opacity=".85" stroke-width="1.8"/><path d="M20 2.2l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" fill="#fff" stroke="#E3A100" stroke-width=".5"/></svg>`;
+  if(t==='fresh')  return `${hd}${EGG} fill="#F2A900"/>${shine} stroke-opacity=".65" stroke-width="1.8"/></svg>`;
+  if(t==='stale')  return `${hd}${EGG} fill="#CDB892"/><path d="M12.8 7.5l-1.8 2.6 1.9 1.6-1.4 2.4" stroke="#6F5E3C" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>${shine} stroke-opacity=".45" stroke-width="1.8"/></svg>`;
+  if(t==='rotten') return `${hd}${EGG} fill="#7E8C78"/><path d="M3.8 15l3.7 2.4 2.4-3.4 3 3.8 2.6-3.4 4.4 2.6" stroke="#2E3629" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>`;
+  return `${hd}${EGG} fill="none" stroke="currentColor" stroke-width="1.6" opacity=".45"/></svg>`;
+}
+const egg=(pct,n)=>eggTier(tierOf(pct,n));
+const verdict=(p,n)=>{const t=tierOf(p,n);return t?`<span class="verdict ${t}">${tierName(t)}</span>`:'';};
+const sc=(r,label)=>r.pct==null
+  ?`<span class="sc none">${eggTier(null)}– <small>${label}</small></span>`
+  :`<span class="sc" title="${tierName(tierOf(r.pct,r.n))}">${egg(r.pct,r.n)}${r.pct}% <small>${label}</small></span>`;
+const legendHTML=()=>TIERS.map(t=>`<span>${eggTier(t[0])} ${t[1]} · ${t[2]}</span>`).join('');
+
+const DATE_RE=/^\d{4}-\d{2}-\d{2}$/, YT_RE=/^[A-Za-z0-9_-]{11}$/;
+function fmtDate(s){if(!DATE_RE.test(s||''))return '';const d=new Date(s+'T00:00:00');return isNaN(d)?'':d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+const isReleased=f=>f.status!=='unreleased';
+const released=()=>FILMS.filter(isReleased);
+const upcoming=()=>FILMS.filter(f=>!isReleased(f)).sort((a,b)=>(a.releaseDate||'9999').localeCompare(b.releaseDate||'9999'));
+const rkey=f=>f.releaseDate||((f.y||0)+'-00-00');
+const byNewest=(a,b)=>rkey(b).localeCompare(rkey(a));
+const metaLine=f=>[f.y,f.dir].filter(Boolean).join(' · ');
+const whenLine=f=>f.releaseDate?'Releases '+fmtDate(f.releaseDate):'Release date to be announced';
+
+function poster(f){
+  const up=!isReleased(f);
+  const img=f.poster?`<img src="${esc(f.poster)}" alt="" loading="lazy">`:'';
+  const lab=up?(f.releaseDate?f.releaseDate.slice(0,4):''):(f.y||'');
+  return `<div class="poster${f.poster?' hasimg':''}" style="--c1:${f.c[0]};--c2:${f.c[1]}" role="img" aria-label="${esc(f.en)} poster">${img}${up?'<span class="dm">Coming soon</span>':''}${f.poster?'':`<span class="pi"><span class="yr">${esc(lab)}</span><span class="t">${esc(f.en)}</span></span>`}</div>`;
+}
+function cardHTML(f){
+  return `<a class="card" href="#/film/${f.id}">${poster(f)}<h3>${esc(f.en)}</h3><div class="meta">${esc(metaLine(f))}</div>
+   <div class="scores">${sc(critic(f),'Critics')}${sc(audience(f),'Audience')}</div></a>`;
+}
+function upcomingCardHTML(f){
+  return `<a class="card" href="#/film/${f.id}">${poster(f)}<h3>${esc(f.en)}</h3><div class="meta">${esc(whenLine(f))}</div>${f.trailer?'<div class="scores"><span class="sc">▶ <small>Trailer</small></span></div>':''}</a>`;
+}
+const anyCard=f=>isReleased(f)?cardHTML(f):upcomingCardHTML(f);
+
+/* YouTube: click-to-play, loaded from youtube-nocookie only when played */
+const thumbUrl=id=>`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const bigThumb=id=>`https://i.ytimg.com/vi/${id}/hq720.jpg`;
+function ytPlayer(id,title){
+  return `<div class="ytw"><div class="yt" data-yt="${id}" data-title="${esc(title)}"><button type="button" class="ytplay" aria-label="Play ${esc(title)}"><img src="${bigThumb(id)}" alt="" loading="lazy"><span class="ytbtn" aria-hidden="true"><svg viewBox="0 0 68 48"><path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.2.2 34 .2 34 .2S12.8.2 7.5 1.7a8.5 8.5 0 0 0-6 6C0 13 0 24 0 24s0 11 1.5 16.3a8.5 8.5 0 0 0 6 6C12.8 47.8 34 47.8 34 47.8s21.2 0 26.5-1.5a8.5 8.5 0 0 0 6-6C68 35 68 24 68 24s0-11-1.5-16.3z" fill="#E0242B"/><path d="M45 24 27 14v20z" fill="#fff"/></svg></span></button></div>
+  <p class="ythelp" hidden>Video not playing? <button type="button" class="linkbtn" data-alt>Try another player</button></p></div>`;
+}
+/* YouTube needs to know which site is embedding the video (Error 153 otherwise), so the page must be opened from http(s) */
+const YT_HOSTS=['www.youtube-nocookie.com','www.youtube.com'];
+function ytEmbedURL(id,host){
+  let u=`https://${host}/embed/${id}?autoplay=1&rel=0&playsinline=1`;
+  if(/^https?:$/.test(location.protocol)) u+='&origin='+encodeURIComponent(location.origin);
+  return u;
+}
+function wirePlayers(root){
+  root.querySelectorAll('.yt').forEach(box=>{
+    const b=box.querySelector('.ytplay'); if(!b) return;
+    const id=box.dataset.yt, wrap=box.parentElement, help=wrap.querySelector('.ythelp'), alt=wrap.querySelector('[data-alt]');
+    let hostIx=0;
+    const im=b.querySelector('img');
+    if(im){const fb=()=>{if(!im.dataset.fb){im.dataset.fb='1';im.src=thumbUrl(id);}};im.addEventListener('error',fb);if(im.complete&&im.naturalWidth===0)fb();}
+    const load=()=>{
+      box.innerHTML=`<iframe src="${ytEmbedURL(id,YT_HOSTS[hostIx])}" title="${esc(box.dataset.title||'YouTube video')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      if(help) help.hidden=false;
+    };
+    b.onclick=()=>{
+      if(!/^https?:$/.test(location.protocol)){ // opened straight from a file: YouTube refuses to play embedded videos
+        box.innerHTML='<div class="ytnote"><div><b>Videos play once the site is opened from a web address.</b><br>YouTube cannot play videos on a page opened straight from a file. Open the site as <b>http://localhost</b> (local server) or from your domain, and the video will play right here.</div></div>';
+        return;
+      }
+      load();
+    };
+    if(alt) alt.onclick=()=>{hostIx=(hostIx+1)%YT_HOSTS.length;load();};
+  });
+}
+function videoCardHTML(v){
+  return `<a class="vcard" href="#/video/${v.id}"><div class="vthumb"><img src="${thumbUrl(v.yt)}" alt="" loading="lazy"><span class="pbadge" aria-hidden="true">▶</span></div><h3>${esc(v.title)}</h3>${v.channel?`<div class="vmeta">${esc(v.channel)}</div>`:''}<div class="scores">${sc(critic(v),'Critics')}${sc(audience(v),'Audience')}</div></a>`;
+}
+
+function paintCount(){const c=$('#wcount');const n=watchList().length;c.textContent=n;c.hidden=!n;}
+function setNav(k){
+  document.querySelectorAll('[data-nav]').forEach(a=>{
+    if(a.dataset.nav===k) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current');
+  });
+  paintCount();
+}
+function meter(label,p,n,unit){
+  return `<div class="meter"><div class="big">${egg(p,n)}${p==null?'–':p+'%'}</div><div class="lbl">${label}${verdict(p,n)}</div><div class="sub">${n?'Based on '+plural(n,unit):'No '+unit+'s yet'}</div></div>`;
+}
+
+/* ---------- VIEWS ---------- */
+const F={decade:0,genre:'',sort:'score',fresh:false};
+function filtered(){
+  let a=released();
+  if(F.decade) a=a.filter(f=>f.y&&Math.floor(f.y/10)*10===F.decade);
+  if(F.genre) a=a.filter(f=>f.g.includes(F.genre));
+  if(F.fresh) a=a.filter(f=>critic(f).pct>=60);
+  if(F.sort==='score') a.sort((x,y)=>avg(y)-avg(x));
+  if(F.sort==='new') a.sort(byNewest);
+  if(F.sort==='old') a.sort((x,y)=>byNewest(y,x));
+  return a;
+}
+function updateGrid(){
+  const a=filtered();
+  $('#grid').innerHTML=a.length?a.map(cardHTML).join(''):'<div class="empty" style="grid-column:1/-1">No films match these filters. Try removing one.</div>';
+  document.querySelectorAll('[data-g]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.g===F.genre)));
+  $('#ct').textContent=plural(a.length,'film');
+}
+
+let heroTimer=null, G='';
+const REDUCE=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stopHero=()=>{clearInterval(heroTimer);heroTimer=null;};
+const guard=()=>{
+  if(!LIVE){view.innerHTML=`<div class="empty" style="margin-top:20px">${NO_FB}</div>`;return true;}
+  if(!FILMS_READY||!VIDEOS_READY){view.innerHTML='<div class="empty" style="margin-top:20px">Loading…</div>';return true;}
+  return false;
+};
+
+function secHead(t,d,sort,genre,id,href){
+  const link=href?`<a class="seeall" href="${href}">See all ›</a>`:`<a class="seeall" href="#/films" data-sort="${sort}" data-genre="${genre||''}" ${id?`id="${id}"`:''}>See all ›</a>`;
+  return `<div class="shead"><div><h2>${t}</h2><p>${d}</p></div>${link}</div>`;
+}
+function rowHTML(items,fn,cls){
+  return `<div class="rowwrap ${cls||''}"><button class="arrow l" aria-label="Scroll left" hidden>‹</button><div class="scroller">${items.map(fn||cardHTML).join('')}</div><button class="arrow r" aria-label="Scroll right">›</button></div>`;
+}
+function wireRow(root){
+  const sc=root.querySelector('.scroller'),l=root.querySelector('.arrow.l'),r=root.querySelector('.arrow.r');
+  const upd=()=>{l.hidden=sc.scrollLeft<8;r.hidden=sc.scrollLeft+sc.clientWidth>=sc.scrollWidth-8;};
+  const go=d=>sc.scrollBy({left:d*sc.clientWidth*.8,behavior:REDUCE?'auto':'smooth'});
+  l.onclick=()=>go(-1); r.onclick=()=>go(1);
+  sc.addEventListener('scroll',upd,{passive:true}); window.addEventListener('resize',upd); upd();
+}
+function slideHTML(it,i,n){
+  const f=it.f, up=!isReleased(f), c=critic(f), a=audience(f);
+  const sub=up?whenLine(f):metaLine(f);
+  const extra=up?(f.trailer?'<div class="ss"><span class="sc">▶ <small>Trailer available</small></span></div>':'')
+                :`<div class="ss">${sc(c,'Critics')}${sc(a,'Audience')}</div>`;
+  return `<div class="slide${i?'':' on'}" style="--c1:${f.c[0]};--c2:${f.c[1]}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${n}" ${i?'aria-hidden="true"':''}>
+    <div class="stext"><span class="pill">${it.pill}</span><h2>${esc(f.en)}</h2>
+      <div class="sm">${esc(sub)}</div>${extra}
+      <a class="btn or" href="#/film/${f.id}" ${i?'tabindex="-1"':''}>${up&&f.trailer?'Watch trailer':'View details'}</a></div>
+    <a class="sposter" href="#/film/${f.id}" tabindex="-1" aria-hidden="true">${poster(f)}</a></div>`;
+}
+const emptySite=()=>`<div class="empty" style="margin-top:20px"><b style="font-size:18px;color:var(--ink)">No films yet</b><br>${isAdmin()?`Add films, trailers and videos from the <a href="${ADMIN_URL}" style="text-decoration:underline">admin panel</a>.`:'Films will appear here soon. Please check back shortly.'}</div>`;
+
+function home(){
+  setNav('');
+  if(guard()) return;
+  const rel=released(), up=upcoming();
+  if(!rel.length&&!up.length&&!VIDEOS.length){view.innerHTML=emptySite();return;}
+  const rated=rel.filter(f=>avg(f)>=0).sort((a,b)=>avg(b)-avg(a));
+  let hero=(rated.length?rated:rel.slice().sort(byNewest)).slice(0,4).map(f=>({f,pill:rated.length?'Top rated':'New'}));
+  if(!hero.length) hero=up.slice(0,4).map(f=>({f,pill:'Coming soon'}));
+  const newest=rel.slice().sort(byNewest).slice(0,10);
+  const picks=rel.filter(f=>critic(f).pct!=null).sort((a,b)=>critic(b).pct-critic(a).pct).slice(0,10);
+  const trending=rel.filter(f=>audience(f).n>0).sort((a,b)=>audience(b).n-audience(a).n).slice(0,3);
+  const gens=GENRES.filter(g=>rel.some(f=>f.g.includes(g)));
+  if(!gens.includes(G)) G=gens[0]||'';
+  const vids=VIDEOS.slice().sort((a,b)=>(avg(b)-avg(a))||(b.ts-a.ts)).slice(0,10);
+  const anyRated=rated.length>0||VIDEOS.some(v=>avg(v)>=0);
+
+  const out=[];
+  if(trending.length) out.push(`<div class="trend"><b>Trending</b><div class="items">${trending.map(f=>`<a href="#/film/${f.id}">${esc(f.en)} · ${audience(f).pct}% audience score</a>`).join('')}</div></div>`);
+  if(hero.length) out.push(`<section class="hero" aria-roledescription="carousel" aria-label="Featured films">
+    ${hero.map((it,i)=>slideHTML(it,i,hero.length)).join('')}
+    <div class="dots">${hero.map((it,i)=>`<button aria-label="Show ${esc(it.f.en)}" aria-current="${i===0}"></button>`).join('')}</div></section>`);
+  if(anyRated) out.push(`<div class="legend sm">${legendHTML()}</div>`);
+  if(newest.length) out.push(`<section class="hsec">${secHead('New releases','The newest Sinhala films on biththara. Check the scores and reviews before you decide what to watch.','new','')}${rowHTML(newest)}</section>`);
+  if(up.length) out.push(`<section class="hsec">${secHead('Coming soon','Upcoming Sinhala films. Watch the trailers and add them to your list.','','','','#/coming-soon')}${rowHTML(up.slice(0,10),upcomingCardHTML)}</section>`);
+  if(vids.length) out.push(`<section class="redband" aria-label="Videos">${secHead('Videos','Rate and review YouTube videos, and watch them right here.','','','','#/videos')}${rowHTML(vids,videoCardHTML,'v')}</section>`);
+  if(gens.length) out.push(`<section class="hsec">${secHead('Browse by genre','Pick a genre to see the highest rated films in it.','score',G,'gsee')}
+    <div class="split"><div><div class="grid4" id="gg"></div></div>
+    <div class="gbtns" role="group" aria-label="Genres">${gens.map(g=>`<button class="gbtn" data-gb="${g}" aria-pressed="${g===G}">${g}</button>`).join('')}</div></div></section>`);
+  if(picks.length) out.push(`<section class="hsec">${secHead('Critics\u2019 picks','The films critics rated highest.','score','')}${rowHTML(picks)}</section>`);
+  view.innerHTML=out.join('');
+
+  const slides=[...view.querySelectorAll('.slide')], dots=[...view.querySelectorAll('.dots button')];
+  if(slides.length){
+    let cur=0;
+    const show=i=>{
+      cur=(i+slides.length)%slides.length;
+      slides.forEach((s,k)=>{const on=k===cur;s.classList.toggle('on',on);on?s.removeAttribute('aria-hidden'):s.setAttribute('aria-hidden','true');s.querySelector('.btn').tabIndex=on?0:-1;});
+      dots.forEach((d,k)=>d.setAttribute('aria-current',String(k===cur)));
+    };
+    const start=()=>{if(REDUCE||heroTimer||slides.length<2)return;heroTimer=setInterval(()=>show(cur+1),5500);};
+    dots.forEach((d,k)=>d.onclick=()=>{show(k);});
+    const h=view.querySelector('.hero');
+    h.addEventListener('mouseenter',stopHero); h.addEventListener('mouseleave',start);
+    h.addEventListener('focusin',stopHero); h.addEventListener('focusout',start);
+    start();
+  }
+  view.querySelectorAll('.rowwrap').forEach(r=>wireRow(r));
+  if(gens.length){
+    const paintGenre=()=>{
+      const a=rel.filter(f=>f.g.includes(G)).sort((x,y)=>avg(y)-avg(x));
+      $('#gg').innerHTML=a.slice(0,4).map(cardHTML).join('');
+      view.querySelectorAll('[data-gb]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.gb===G)));
+      $('#gsee').dataset.genre=G;
+    };
+    view.querySelectorAll('[data-gb]').forEach(b=>b.onclick=()=>{G=b.dataset.gb;paintGenre();});
+    paintGenre();
+  }
+}
+
+function films(){
+  setNav('films');
+  if(guard()) return;
+  const rel=released();
+  if(!rel.length){view.innerHTML='<h1>Movies</h1><div class="empty" style="margin-top:20px">No films have been added yet.</div>';return;}
+  const decades=[...new Set(rel.filter(f=>f.y).map(f=>Math.floor(f.y/10)*10))].sort();
+  view.innerHTML=`
+  <div class="intro">
+    <div><h1>Movies</h1><p>Every released Sinhala film on biththara. Filter by genre or decade, or sort by score.</p></div>
+    <div class="legend">${legendHTML()}</div>
+  </div>
+  <section class="sec" aria-label="All films">
+    <div class="sec-head"><h2>All films</h2><span class="muted" id="ct"></span></div>
+    <div class="controls">
+      <button class="chip" data-g="" aria-pressed="${F.genre===''}">All genres</button>
+      ${GENRES.map(g=>`<button class="chip" data-g="${g}" aria-pressed="${F.genre===g}">${g}</button>`).join('')}
+    </div>
+    <div class="controls row2">
+      <select class="sel" id="dec" aria-label="Decade">
+        <option value="0">All decades</option>${decades.map(d=>`<option value="${d}">${d}s</option>`).join('')}
+      </select>
+      <select class="sel" id="sort" aria-label="Sort by">
+        <option value="score">Highest rated</option><option value="new">Newest</option><option value="old">Oldest</option>
+      </select>
+      <label class="tog"><input type="checkbox" id="fresh"> Fresh or better</label>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>`;
+  $('#dec').value=String(F.decade); $('#sort').value=F.sort; $('#fresh').checked=F.fresh;
+  view.querySelectorAll('[data-g]').forEach(b=>b.onclick=()=>{F.genre=b.dataset.g;updateGrid();});
+  $('#dec').onchange=e=>{F.decade=+e.target.value;updateGrid();};
+  $('#sort').onchange=e=>{F.sort=e.target.value;updateGrid();};
+  $('#fresh').onchange=e=>{F.fresh=e.target.checked;updateGrid();};
+  updateGrid();
+}
+
+function comingSoon(){
+  setNav('soon');
+  if(guard()) return;
+  const a=upcoming();
+  view.innerHTML=`<h1>Coming soon</h1><p class="muted" style="margin:8px 0 24px">Trailers and release dates for upcoming Sinhala films.</p>`+
+    (a.length?`<div class="grid">${a.map(upcomingCardHTML).join('')}</div>`:'<div class="empty">No upcoming films yet. Check back soon.</div>');
+}
+
+function topRated(){
+  setNav('top');
+  if(guard()) return;
+  const a=released().filter(f=>avg(f)>=0).sort((x,y)=>avg(y)-avg(x));
+  view.innerHTML=`<h1>Top rated films</h1>
+  <p class="muted" style="margin:8px 0 20px">Ranked by the average of critic and audience scores.</p>`+
+  (a.length?`<ol class="rank">${a.map((f,i)=>`<li><span class="n">${i+1}</span>
+    <a href="#/film/${f.id}">${poster(f)}</a>
+    <div><h3><a href="#/film/${f.id}">${esc(f.en)}</a></h3><div class="muted" style="font-size:14.5px">${esc(metaLine(f))}</div></div>
+    <div class="two">${sc(critic(f),'Critics')}${sc(audience(f),'Audience')}</div></li>`).join('')}</ol>`
+   :'<div class="empty">No films have been rated yet. Be the first to review a film.</div>');
+}
+
+const VS={sort:'score'};
+function videosPage(){
+  setNav('videos');
+  if(guard()) return;
+  view.innerHTML=`<div class="vtheme"><div class="vhero"><h1>Videos</h1><p>Rate and review YouTube videos about Sinhala cinema and entertainment, and watch them right here on the site.</p></div>
+    <div class="controls row2"><select class="sel" id="vsort" aria-label="Sort videos"><option value="score">Highest rated</option><option value="new">Newest</option></select><span class="muted" id="vct" style="margin-left:auto"></span></div>
+    <div class="vgrid" id="vgrid"></div></div>`;
+  $('#vsort').value=VS.sort;
+  const paint=()=>{
+    const a=VIDEOS.slice().sort(VS.sort==='new'?((x,y)=>y.ts-x.ts):((x,y)=>(avg(y)-avg(x))||(y.ts-x.ts)));
+    $('#vgrid').innerHTML=a.length?a.map(videoCardHTML).join(''):'<div class="empty" style="grid-column:1/-1">No videos have been added yet.</div>';
+    $('#vct').textContent=plural(a.length,'video');
+  };
+  $('#vsort').onchange=e=>{VS.sort=e.target.value;paint();};
+  paint();
+}
+
+function list(){
+  setNav('list');
+  if(LIVE&&!FILMS_READY){view.innerHTML='<div class="empty" style="margin-top:20px">Loading…</div>';return;}
+  const a=watchList().map(id=>BY[id]).filter(Boolean);
+  view.innerHTML=`<h1>My list</h1>
+  <p class="muted" style="margin:8px 0 24px">Films you want to watch.</p>`+
+  (a.length?`<div class="grid">${a.map(anyCard).join('')}</div>`
+   :`<div class="empty">Your list is empty. Open a film and choose \u201cAdd to my list\u201d.<br><br><a class="btn" href="#/">Browse films</a></div>`);
+}
+
+function search(q){
+  setNav('');
+  if(guard()) return;
+  const n=q.trim().toLowerCase();
+  const hit=a=>a.filter(Boolean).some(x=>String(x).toLowerCase().includes(n));
+  const fs=n?FILMS.filter(f=>hit([f.en,f.si,f.dir,f.y,...f.g,...f.cast.map(c=>c.actor)])):[];
+  const vs=n?VIDEOS.filter(v=>hit([v.title,v.channel])):[];
+  view.innerHTML=`<h1>Search results</h1>
+  <p class="muted" style="margin:8px 0 24px">${plural(fs.length,'film')} and ${plural(vs.length,'video')} for \u201c${esc(q)}\u201d</p>`+
+  (fs.length?`<div class="grid">${fs.map(anyCard).join('')}</div>`:'')+
+  (vs.length?`<h2 style="margin:32px 0 16px">Videos</h2><div class="vgrid vtheme">${vs.map(videoCardHTML).join('')}</div>`:'')+
+  ((!fs.length&&!vs.length)?'<div class="empty">No results. Try a different title, director, genre or year.</div>':'');
+}
+
+function about(){
+  setNav('');
+  view.innerHTML=`<div class="about"><h1>How scores work</h1>
+  <h2>Critic score</h2>
+  <p>The percentage of reviews from certified critics that are 4 stars or higher. Anyone can apply to become a critic from the footer.</p>
+  <h2>Audience score</h2>
+  <p>The percentage of audience ratings that are 4 stars or higher. Anyone can rate a film and write a review.</p>
+  <h2>Four levels</h2>
+  <p>Each score becomes one of four levels, shown by an egg:</p>
+  ${TIERS.map(t=>`<p class="sc" style="gap:10px;margin:6px 0">${eggTier(t[0])} <b>${t[1]}</b> · ${t[2]}</p>`).join('')}
+  <p style="margin-top:12px">A Golden egg also needs at least ${GOLDEN_MIN} reviews, so one or two reviews cannot earn it. Films and videos with no reviews yet show a dash instead of a score.</p>
+  <h2>Your ratings</h2>
+  <p>Reviews are tied to your account and shown to everyone. Your list is saved to your account when you are logged in.</p></div>`;
+}
+function avatar(a,f){
+  if(a.photo) return `<img class="av" src="${esc(a.photo)}" alt="${esc(a.actor)}" loading="lazy">`;
+  const ini=a.actor.split(/\s+/).filter(Boolean).slice(0,2).map(w=>Array.from(w)[0]).join('').toUpperCase();
+  return `<span class="av" style="--c1:${f.c[0]};--c2:${f.c[1]}" aria-hidden="true">${esc(ini)}</span>`;
+}
+function castHTML(f){
+  const c=Array.isArray(f.cast)?f.cast.filter(a=>a&&a.actor):[];
+  if(!c.length) return `<section class="cast-sec" aria-labelledby="ch"><h2 id="ch">Cast</h2><div class="empty" style="margin-top:14px">Cast details haven\u2019t been added for this film yet.</div></section>`;
+  return `<section class="cast-sec" aria-labelledby="ch"><h2 id="ch">Cast</h2>
+    <ul class="cast" role="list">${c.map(a=>`<li class="cm">${avatar(a,f)}<b>${esc(a.actor)}</b>${a.role?`<span class="rl">${esc(a.role)}</span>`:''}</li>`).join('')}</ul></section>`;
+}
+
+let draftStars=0;
+const reviewsFor=id=>REVIEWS.filter(r=>r.filmId===id);
+const myReview=id=>USER?REVIEWS.find(r=>r.filmId===id&&r.uid===USER.uid):null;
+function revHTML(r){
+  const mine=USER&&r.uid===USER.uid;
+  return `<div class="rev"><div class="who"><b>${esc(r.name||'Anonymous')}</b>${r.role==='critic'?'<span class="badge">Critic</span>':''}${mine?'<span class="badge you">You</span>':''}<span class="st" aria-label="${plural(r.stars,'star')}">${'★'.repeat(r.stars)}</span><span class="muted">${r.ts?r.ts.toLocaleDateString('en-GB'):''}</span></div>${r.text?`<p>${esc(r.text)}</p>`:''}</div>`;
+}
+const metersHTML=f=>{const c=critic(f),a=audience(f);return meter('Critic score',c.pct,c.n,'review')+meter('Audience score',a.pct,a.n,'rating');};
+function paintLive(id){
+  const f=BY[id]||VBY[id]; if(!f||!$('#revs')) return;
+  const m=$('#meters'); if(m) m.innerHTML=metersHTML(f);
+  const l=reviewsFor(id), cr=l.filter(r=>r.role==='critic'), au=l.filter(r=>r.role!=='critic');
+  $('#crsec').hidden=!cr.length; $('#crev').innerHTML=cr.map(revHTML).join('');
+  $('#revs').innerHTML=au.length?au.map(revHTML).join(''):'<div class="empty">'+(REV_READY?'No reviews yet. Be the first to share what you thought.':'Loading reviews…')+'</div>';
+}
+function reviewFormHTML(f){
+  if(f.status==='unreleased') return `<section class="panel"><h2>Ratings and reviews</h2><p class="muted" style="margin:8px 0 0">Ratings and reviews open once this film is released.</p></section>`;
+  if(!LIVE) return `<section class="panel"><h2>Write your review</h2><p class="muted" style="margin:8px 0 0">${NO_FB}</p></section>`;
+  if(!AUTH_READY) return `<section class="panel"><h2>Write your review</h2><p class="muted" style="margin:8px 0 0">Loading…</p></section>`;
+  if(!USER) return `<section class="panel"><h2>Write your review</h2><p class="muted" style="margin:8px 0 16px">Log in or create an account to rate this and post a review.</p><button class="btn" id="rlogin" type="button">Log in / Sign up</button></section>`;
+  const mine=myReview(f.id); draftStars=mine?mine.stars:0;
+  return `<section class="panel" aria-labelledby="rh"><h2 id="rh">${mine?'Your review':'Write your review'}</h2>
+    <p class="muted" style="margin:4px 0 0;font-size:14.5px">Posting as <b>${esc(nickOf())}</b>${myRole()==='critic'?' <span class="badge">Critic</span>':''}</p>
+    <form id="rf" novalidate style="margin-top:12px">
+      <span style="font-weight:700;font-size:14.5px" id="sl">Your rating</span>
+      <div class="stars" role="radiogroup" aria-labelledby="sl">
+        ${[1,2,3,4,5].map(n=>`<button type="button" class="star" data-s="${n}" role="radio" aria-checked="false" aria-label="${plural(n,'star')}">★</button>`).join('')}
+      </div>
+      <label class="field"><span>Review (optional)</span><textarea id="tx" maxlength="600">${mine?esc(mine.text||''):''}</textarea></label>
+      <p class="err" id="er" role="alert"></p>
+      <button class="btn" type="submit" id="rsub">${mine?'Update review':'Post review'}</button>
+      ${mine?'<button class="btn ghost" type="button" id="del" style="margin-left:8px">Delete</button>':''}
+    </form></section>`;
+}
+const reviewPanelsHTML=()=>`<section class="panel" id="crsec" aria-labelledby="cvh" hidden>
+    <h2 id="cvh" style="margin-bottom:8px">Critic reviews</h2><div id="crev"></div></section>
+  <section class="panel" aria-labelledby="vh"><h2 id="vh" style="margin-bottom:8px">Audience reviews</h2><div id="revs"></div></section>`;
+async function toggleWatch(id){
+  const has=inList(id);
+  if(USER&&db){
+    P=P||{}; P.watch=has?(P.watch||[]).filter(x=>x!==id):[...(P.watch||[]),id];
+    try{await db.collection('users').doc(USER.uid).set({watch:has?FV().arrayRemove(id):FV().arrayUnion(id)},{merge:true});}
+    catch(e){toast(fbError(e));}
+  }else{S.watch=has?S.watch.filter(x=>x!==id):[...S.watch,id];save();}
+}
+/* star picker + post/delete for a film or a video page */
+function wireReviewForm(id){
+  const paintStars=()=>view.querySelectorAll('.star').forEach(b=>{
+    b.classList.toggle('on',+b.dataset.s<=draftStars); b.setAttribute('aria-checked',String(+b.dataset.s===draftStars));
+  });
+  view.querySelectorAll('.star').forEach(b=>b.onclick=()=>{draftStars=+b.dataset.s;paintStars();$('#er').textContent='';});
+  const rl=$('#rlogin'); if(rl) rl.onclick=()=>openAuth('login');
+  const rf=$('#rf');
+  if(rf){
+    rf.onsubmit=async e=>{
+      e.preventDefault(); const er=$('#er'); er.textContent='';
+      if(!draftStars){er.textContent='Choose a star rating before posting.';return;}
+      const btn=$('#rsub'); btn.disabled=true;
+      try{
+        await db.collection('reviews').doc(id+'_'+USER.uid).set({
+          filmId:id, uid:USER.uid, name:nickOf().slice(0,40), role:myRole()==='critic'?'critic':'user',
+          stars:draftStars, text:$('#tx').value.trim().slice(0,600), createdAt:TS()
+        });
+        toast('Review posted');
+      }catch(err){er.textContent=fbError(err);}
+      finally{btn.disabled=false;}
+    };
+    const d=$('#del');
+    if(d) d.onclick=async()=>{
+      try{await db.collection('reviews').doc(id+'_'+USER.uid).delete();draftStars=0;toast('Review deleted');route();}
+      catch(err){$('#er').textContent=fbError(err);}
+    };
+  }
+  paintStars();
+}
+function film(id){
+  if(guard()) return;
+  const f=BY[id];
+  if(!f){view.innerHTML='<div class="empty">We couldn\u2019t find that film.<br><br><a class="btn" href="#/">Back to home</a></div>';return;}
+  setNav(''); draftStars=0;
+  const up=!isReleased(f);
+  const facts=[up?whenLine(f):f.y,f.dir?'Directed by '+f.dir:''].filter(Boolean).join(' · ');
+  view.innerHTML=`<a class="back" href="#/">‹ All films</a>
+  ${f.trailer?`<div class="trailer-top" role="region" aria-label="Trailer">${ytPlayer(f.trailer,f.en+' trailer')}</div>`:''}
+  <div class="detail">
+    <div>${poster(f)}</div>
+    <div>
+      ${up?'<span class="soon">Coming soon</span>':''}
+      <h1>${esc(f.en)}</h1>
+      ${f.si?`<p class="sub-t" lang="si">${esc(f.si)}</p>`:''}
+      ${facts?`<div class="facts">${esc(facts)}</div>`:''}
+      ${f.g.length?`<div class="tags">${f.g.map(g=>`<span>${esc(g)}</span>`).join('')}</div>`:''}
+      ${up?'':`<div class="meters" id="meters" style="margin-top:20px">${metersHTML(f)}</div>`}
+      ${f.note?`<p style="max-width:56ch;margin:18px 0">${esc(f.note)}</p>`:'<div style="height:16px"></div>'}
+      <button class="btn ghost" id="wl"></button>
+    </div>
+  </div>
+  ${castHTML(f)}
+  ${reviewFormHTML(f)}
+  ${up?'':reviewPanelsHTML()}`;
+  const paintWl=()=>{const b=$('#wl');if(b)b.textContent=inList(id)?'Remove from my list':'Add to my list';};
+  $('#wl').onclick=async()=>{await toggleWatch(id);paintWl();paintCount();toast(inList(id)?'Added to my list':'Removed from my list');};
+  wirePlayers(view); wireReviewForm(id); paintWl(); paintLive(id);
+}
+function video(id){
+  if(guard()) return;
+  const v=VBY[id];
+  if(!v){view.innerHTML='<div class="empty">We couldn\u2019t find that video.<br><br><a class="btn" href="#/videos">Back to videos</a></div>';return;}
+  setNav('videos'); draftStars=0;
+  view.innerHTML=`<div class="vtheme"><a class="back" href="#/videos">‹ All videos</a>
+  <div class="vstage">${ytPlayer(v.yt,v.title)}</div>
+  <h1 style="margin-top:22px">${esc(v.title)}</h1>
+  ${v.channel?`<div class="facts" style="margin:6px 0 0">${esc(v.channel)}</div>`:''}
+  <div class="meters" id="meters" style="margin-top:20px">${metersHTML(v)}</div>
+  ${v.desc?`<p style="max-width:70ch;margin:18px 0;white-space:pre-wrap;overflow-wrap:anywhere">${esc(v.desc)}</p>`:''}
+  <p style="margin:12px 0 0"><a class="btn ghost" href="https://www.youtube.com/watch?v=${v.yt}" target="_blank" rel="noopener noreferrer">Open on YouTube</a></p>
+  ${reviewFormHTML(v)}
+  ${reviewPanelsHTML()}</div>`;
+  wirePlayers(view); wireReviewForm(id); paintLive(id);
+}
+
+/* ---------- CRITIC APPLICATION ---------- */
+function parseLinks(txt){
+  const out=[];
+  for(const raw of txt.split(/\n+/)){
+    const t=raw.trim(); if(!t) continue;
+    let u; try{u=new URL(/^https?:\/\//i.test(t)?t:'https://'+t);}catch(e){return {error:'“'+t.slice(0,60)+'” is not a valid link.'};}
+    if(!/^https?:$/.test(u.protocol)||!u.hostname.includes('.')) return {error:'“'+t.slice(0,60)+'” is not a valid link.'};
+    out.push(u.href);
+  }
+  if(!out.length) return {error:'Add at least one link to your work or profile.'};
+  if(out.length>5) return {error:'You can add up to 5 links.'};
+  return {links:out};
+}
+async function applyCritic(){
+  setNav('');
+  view.innerHTML=`<div class="apply"><h1>Become a certified critic</h1>
+    <p class="muted" style="margin:8px 0 0">Certified critics get a Critic badge, and their reviews count toward a film\u2019s critic score. Tell us where you publish and where we can see your work. An admin will review your application.</p>
+    <div id="ca"></div></div>`;
+  const box=$('#ca'), here=()=>curRoute()==='apply-critic'&&$('#ca')===box;
+  if(!LIVE){box.innerHTML=`<div class="notice">${NO_FB}</div>`;return;}
+  if(!AUTH_READY){box.innerHTML='<div class="notice">Loading…</div>';return;}
+  if(!USER){box.innerHTML='<div class="notice">Log in or create an account first, then come back to apply.<br><br><button class="btn" id="calogin" type="button">Log in / Sign up</button></div>';$('#calogin').onclick=()=>openAuth('login');return;}
+  const role=myRole();
+  if(role==='critic'){box.innerHTML='<div class="notice"><span class="badge">Critic</span> You are already a certified critic. Your reviews carry the Critic badge.</div>';return;}
+  if(role==='admin'){box.innerHTML='<div class="notice">You are an admin. Admins do not need to apply.</div>';return;}
+  box.innerHTML='<div class="notice">Loading…</div>';
+  let req=null;
+  try{const snap=await db.collection('critic_requests').doc(USER.uid).get();req=snap.exists?snap.data():null;}
+  catch(e){if(here())box.innerHTML=`<div class="notice">${esc(fbError(e))}</div>`;return;}
+  if(!here()) return;
+  const st=req&&req.status;
+  const note=st==='pending'?'<div class="notice"><span class="status">Pending review</span><p style="margin:10px 0 0">Your application has been received. You can update it below while it is pending.</p></div>'
+    :st==='rejected'?'<div class="notice"><span class="status">Not approved</span><p style="margin:10px 0 0">Your last application was not approved. You are welcome to apply again with more details.</p></div>'
+    :st==='approved'?'<div class="notice"><span class="status">Approved</span><p style="margin:10px 0 0">Your application was approved. Your Critic badge will appear shortly.</p></div>':'';
+  box.innerHTML=`${note}
+  <section class="panel" aria-labelledby="ach"><h2 id="ach">${st==='pending'?'Update your application':'Application'}</h2>
+  <form id="caf" novalidate style="margin-top:12px">
+    <label class="field"><span>Publication or outlet name</span><input id="cap" maxlength="80" value="${esc(req&&req.publication||'')}" placeholder="e.g. Cinema Weekly, my blog, my YouTube channel"></label>
+    <label class="field"><span>Profile and work links (one per line, up to 5)</span><textarea id="cal" maxlength="800" placeholder="https://example.com/my-reviews">${esc((req&&req.links||[]).join('\n'))}</textarea></label>
+    <p class="err" id="cae" role="alert"></p>
+    <button class="btn" type="submit" id="cas">${st==='pending'?'Update application':'Submit application'}</button>
+  </form></section>`;
+  $('#caf').onsubmit=async e=>{
+    e.preventDefault(); const er=$('#cae'); er.textContent='';
+    const pub=$('#cap').value.trim();
+    if(pub.length<2){er.textContent='Enter the name of your publication or outlet.';$('#cap').focus();return;}
+    const l=parseLinks($('#cal').value); if(l.error){er.textContent=l.error;$('#cal').focus();return;}
+    const btn=$('#cas'); btn.disabled=true;
+    try{
+      await db.collection('critic_requests').doc(USER.uid).set({uid:USER.uid,email:emailOf(),nick:nickOf(),publication:pub,links:l.links,status:'pending',createdAt:TS()});
+      toast('Application submitted'); applyCritic();
+    }catch(err){er.textContent=fbError(err);btn.disabled=false;}
+  };
+}
+
+/* ---------- ACCOUNT (Firebase Authentication) ---------- */
+let amode='login', lastFocus=null, unsubProfile=null, pendingNick=null;
+const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function fbError(e){
+  const c=(e&&e.code)||'';
+  const m={
+    'auth/invalid-email':'Enter a valid email address.',
+    'auth/user-not-found':'Incorrect email or password.','auth/wrong-password':'Incorrect email or password.',
+    'auth/invalid-credential':'Incorrect email or password.','auth/invalid-login-credentials':'Incorrect email or password.',
+    'auth/email-already-in-use':'An account with this email already exists. Try logging in.',
+    'auth/weak-password':'Password must be at least 6 characters.',
+    'auth/too-many-requests':'Too many attempts. Please wait a moment and try again.',
+    'auth/network-request-failed':'Network problem. Check your connection and try again.',
+    'auth/popup-closed-by-user':'Sign-in was cancelled.','auth/cancelled-popup-request':'Sign-in was cancelled.',
+    'auth/popup-blocked':'Your browser blocked the sign-in popup. Allow popups and try again.',
+    'auth/unauthorized-domain':'This website address is not authorised in Firebase (Authentication > Settings > Authorized domains).',
+    'auth/operation-not-allowed':'This sign-in method is not turned on in Firebase yet.',
+    'permission-denied':'You do not have permission to do that.',
+    'unavailable':'Could not reach the server. Please try again.'
+  };
+  return m[c]||m[c.replace('firestore/','')]||'Something went wrong. Please try again.';
+}
+async function ensureProfile(u){
+  const ref=db.collection('users').doc(u.uid);
+  const snap=await ref.get();
+  if(!snap.exists){
+    const nick=(pendingNick||u.displayName||(u.email||'').split('@')[0]||'Friend').trim().slice(0,24)||'Friend';
+    pendingNick=null;
+    await ref.set({nick,email:(u.email||'').toLowerCase(),role:'user',watch:[],createdAt:TS()});
+  }
+  if(S.watch.length){ // move a guest list into the account
+    await ref.set({watch:FV().arrayUnion(...S.watch)},{merge:true}); S.watch=[]; save();
+  }
+}
+function startAuth(){
+  if(!auth){paintAcct();return;}
+  auth.onAuthStateChanged(async u=>{
+    USER=u; AUTH_READY=true; P=null;
+    if(unsubProfile){unsubProfile();unsubProfile=null;}
+    if(u){
+      try{await ensureProfile(u);}catch(e){console.error(e);}
+      unsubProfile=db.collection('users').doc(u.uid).onSnapshot(s=>{P=s.exists?s.data():null;paintAcct();softRefresh();},e=>console.error(e));
+    }
+    paintAcct(); route();
+  });
+}
+function startData(){
+  if(!db) return;
+  db.collection('reviews').orderBy('createdAt','desc').limit(3000).onSnapshot(snap=>{
+    REVIEWS=snap.docs.map(d=>{
+      const x=d.data({serverTimestamps:'estimate'});
+      return {id:d.id,filmId:String(x.filmId||''),uid:x.uid,name:x.name,role:x.role==='critic'?'critic':'user',stars:Math.min(5,Math.max(0,+x.stars||0)),text:x.text||'',ts:x.createdAt&&x.createdAt.toDate?x.createdAt.toDate():null};
+    });
+    computeStats(); const first=!REV_READY; REV_READY=true; liveChanged(first);
+  },e=>{console.error(e);REV_READY=true;liveChanged(true);});
+  db.collection('films').onSnapshot(snap=>{
+    FDOCS={}; snap.forEach(d=>{FDOCS[d.id]=d.data();});
+    FILMS_READY=true; rebuildFilms(); liveChanged(true);
+  },e=>{console.error(e);FILMS_READY=true;liveChanged(true);});
+  db.collection('videos').onSnapshot(snap=>{
+    VDOCS={}; snap.forEach(d=>{VDOCS[d.id]=d.data({serverTimestamps:'estimate'});});
+    VIDEOS_READY=true; rebuildVideos(); liveChanged(true);
+  },e=>{console.error(e);VIDEOS_READY=true;liveChanged(true);});
+}
+function liveChanged(full){
+  const r=curRoute();
+  if(r==='film'||r==='video'){
+    const id=decodeURIComponent(location.hash.split('/')[2]||'');
+    const typing=document.activeElement&&document.activeElement.id==='tx';
+    if(full&&!typing) route(); else paintLive(id);
+    return;
+  }
+  route();
+}
+function softRefresh(){
+  paintCount();
+  const r=curRoute();
+  if(r==='film'){const b=$('#wl');if(b)b.textContent=inList(decodeURIComponent(location.hash.split('/')[2]||''))?'Remove from my list':'Add to my list';}
+  else if(r==='list'||r==='apply-critic') route();
+}
+
+/* films and videos come from Firestore (added in admin.html); every field is validated before use */
+const SLUG=/^[a-z0-9-]{1,60}$/, HEX=/^#[0-9a-fA-F]{6}$/, URLRE=/^https?:\/\//i;
+const str=(v,n)=>typeof v==='string'?v.trim().slice(0,n):'';
+function normFilm(id,d){
+  if(!SLUG.test(id)) return null;
+  const f={id,en:str(d.en,120)||id,si:str(d.si,120),y:null,dir:str(d.dir,120),g:[],note:str(d.note,1500),cast:[],c:['#1B3A5C','#0C1827'],poster:'',
+    status:d.status==='unreleased'?'unreleased':'released',
+    releaseDate:DATE_RE.test(d.releaseDate||'')?d.releaseDate:'',
+    trailer:YT_RE.test(d.trailer||'')?d.trailer:''};
+  if(Number.isInteger(d.y)&&d.y>1900&&d.y<2200) f.y=d.y; else if(f.releaseDate) f.y=+f.releaseDate.slice(0,4);
+  if(Array.isArray(d.g)) f.g=d.g.filter(x=>GENRES.includes(x));
+  if(Array.isArray(d.c)&&d.c.length===2&&d.c.every(x=>HEX.test(x))) f.c=d.c.slice();
+  if(typeof d.poster==='string'&&URLRE.test(d.poster)) f.poster=d.poster;
+  if(Array.isArray(d.cast)) f.cast=d.cast.filter(a=>a&&typeof a.actor==='string'&&a.actor.trim()).slice(0,40).map(a=>({
+    actor:a.actor.trim().slice(0,80),role:str(a.role,80),photo:typeof a.photo==='string'&&URLRE.test(a.photo)?a.photo:''}));
+  return f;
+}
+function rebuildFilms(){
+  FILMS=Object.entries(FDOCS).map(([id,d])=>normFilm(id,d||{})).filter(Boolean);
+  BY=Object.fromEntries(FILMS.map(f=>[f.id,f]));
+}
+function rebuildVideos(){
+  VIDEOS=[];
+  for(const [id,d] of Object.entries(VDOCS)){
+    if(!d||!/^v-[A-Za-z0-9_-]{11}$/.test(id)||d.yt!==id.slice(2)) continue;
+    VIDEOS.push({id,yt:d.yt,title:str(d.title,150)||'Untitled video',channel:str(d.channel,100),desc:str(d.desc,2000),
+      ts:d.createdAt&&d.createdAt.toMillis?d.createdAt.toMillis():0});
+  }
+  VBY=Object.fromEntries(VIDEOS.map(v=>[v.id,v]));
+}
+
+function paintAcct(){
+  const w=$('#acctwrap'), u=USER;
+  if(!AUTH_READY){w.innerHTML='';return;}
+  if(!u){
+    w.innerHTML=`<button class="acct" id="acbtn" type="button" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke-linecap="round"/></svg><span class="lbl">Log in / Sign up</span></button>`;
+    $('#acbtn').onclick=()=>openAuth('login');
+    return;
+  }
+  const role=myRole(), badge=role==='admin'?'<span class="badge">Admin</span>':role==='critic'?'<span class="badge">Critic</span>':'';
+  w.innerHTML=`<button class="acct in" id="acbtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="acmenu" aria-label="Account menu for ${esc(nickOf())}">
+      <span class="ava">${esc(Array.from(nickOf())[0].toUpperCase())}</span><span class="nick">${esc(nickOf())}</span>
+      <svg class="caret" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div class="menu" id="acmenu" hidden>
+      <div class="who"><b>${esc(nickOf())}${badge}</b>${esc(emailOf())}</div>
+      <a href="#/list">My list</a>
+      ${role==='user'?'<a href="#/apply-critic">Apply to be a critic</a>':''}
+      ${role==='admin'?`<a href="${ADMIN_URL}">Admin panel</a>`:''}
+      <button type="button" id="logout">Log out</button>
+    </div>`;
+  const btn=$('#acbtn'), menu=$('#acmenu');
+  btn.onclick=()=>{const open=menu.hidden;menu.hidden=!open;btn.setAttribute('aria-expanded',String(open));};
+  menu.querySelectorAll('a').forEach(a=>a.onclick=()=>{menu.hidden=true;btn.setAttribute('aria-expanded','false');});
+  $('#logout').onclick=async()=>{try{await auth.signOut();toast('Logged out');}catch(e){toast(fbError(e));}};
+}
+function closeMenu(){const m=$('#acmenu');if(m&&!m.hidden){m.hidden=true;const b=$('#acbtn');if(b)b.setAttribute('aria-expanded','false');}}
+
+function setAuthMode(m){
+  amode=m; const su=m==='signup';
+  $('#tab-login').setAttribute('aria-selected',String(!su));
+  $('#tab-signup').setAttribute('aria-selected',String(su));
+  $('#amt').textContent=su?'Create your account':'Welcome back';
+  $('#ams').textContent=su?'Join biththara to rate films and write reviews.':'Log in to rate films and write reviews.';
+  $('#fn').hidden=!su; $('#afpw').hidden=su;
+  $('#ap').setAttribute('autocomplete',su?'new-password':'current-password');
+  $('#asub').textContent=su?'Create account':'Log in';
+  $('#asw').innerHTML=su?'Already have an account? <button type="button" data-m="login">Log in</button>'
+                         :'New to biththara? <button type="button" data-m="signup">Create an account</button>';
+  $('#aer').textContent=auth?'':NO_FB;
+}
+function openAuth(m){
+  lastFocus=document.activeElement; setAuthMode(m||'login');
+  $('#authm').hidden=false; document.documentElement.style.overflow='hidden';
+  setTimeout(()=>{(m==='signup'?$('#an'):$('#ae')).focus();},0);
+}
+function closeAuth(){
+  $('#authm').hidden=true; document.documentElement.style.overflow='';
+  $('#af').reset(); $('#ap').type='password'; $('#apt').textContent='Show';
+  const t=(lastFocus&&document.contains(lastFocus))?lastFocus:$('#acbtn'); if(t&&t.focus) t.focus();
+}
+async function googleSignIn(){
+  const err=$('#aer'); err.textContent='';
+  if(!auth){err.textContent=NO_FB;return;}
+  try{await auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());closeAuth();toast('Signed in with Google');}
+  catch(e){err.textContent=fbError(e);}
+}
+(function wireAuth(){
+  const m=$('#authm');
+  m.addEventListener('click',e=>{
+    if(e.target===m||e.target.id==='amx') return closeAuth();
+    const b=e.target.closest('[data-m]'); if(b) setAuthMode(b.dataset.m);
+  });
+  $('#agoog').onclick=googleSignIn;
+  $('#apt').onclick=()=>{const p=$('#ap'),show=p.type==='password';p.type=show?'text':'password';$('#apt').textContent=show?'Hide':'Show';$('#apt').setAttribute('aria-label',show?'Hide password':'Show password');};
+  $('#afp').onclick=async()=>{
+    const err=$('#aer'); err.textContent='';
+    if(!auth){err.textContent=NO_FB;return;}
+    const email=$('#ae').value.trim().toLowerCase();
+    if(!EMAIL_RE.test(email)){err.textContent='Enter your email address above first.';$('#ae').focus();return;}
+    try{await auth.sendPasswordResetEmail(email);toast('If that email has an account, a reset link is on its way.');}
+    catch(e){err.textContent=fbError(e);}
+  };
+  $('#af').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=$('#asub'), err=$('#aer'); err.textContent='';
+    if(!auth){err.textContent=NO_FB;return;}
+    const email=$('#ae').value.trim().toLowerCase(), pw=$('#ap').value, nick=$('#an').value.trim();
+    if(amode==='signup'&&nick.length<2){err.textContent='Nickname must be at least 2 characters.';$('#an').focus();return;}
+    if(!EMAIL_RE.test(email)){err.textContent='Enter a valid email address.';$('#ae').focus();return;}
+    if(amode==='signup'&&pw.length<6){err.textContent='Password must be at least 6 characters.';$('#ap').focus();return;}
+    if(amode==='login'&&!pw){err.textContent='Enter your password.';$('#ap').focus();return;}
+    btn.disabled=true;
+    try{
+      if(amode==='signup'){
+        pendingNick=nick.slice(0,24);
+        const cred=await auth.createUserWithEmailAndPassword(email,pw);
+        await cred.user.updateProfile({displayName:pendingNick||nick});
+        cred.user.sendEmailVerification().catch(()=>{});
+        closeAuth(); toast('Welcome to biththara, '+nick+'. Check your email to verify your address.');
+      }else{
+        await auth.signInWithEmailAndPassword(email,pw);
+        closeAuth(); toast('Welcome back');
+      }
+    }catch(ex){pendingNick=null;err.textContent=fbError(ex);}
+    finally{btn.disabled=false;}
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ if(!m.hidden) closeAuth(); else closeMenu(); return; }
+    if(e.key==='Tab'&&!m.hidden){
+      const f=[...m.querySelectorAll('button,input,a[href]')].filter(x=>!x.disabled&&x.offsetParent!==null);
+      if(!f.length) return;
+      const first=f[0], last=f[f.length-1];
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+      else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+  });
+  document.addEventListener('click',e=>{if(!e.target.closest('.acctwrap'))closeMenu();});
+})();
+
+/* ---------- ROUTER ---------- */
+function route(){
+  stopHero();
+  const p=(location.hash.slice(2)||'').split('/');
+  const a=p[0], b=p.slice(1).join('/');
+  if(a==='film') film(b);
+  else if(a==='films') films();
+  else if(a==='coming-soon') comingSoon();
+  else if(a==='videos') videosPage();
+  else if(a==='video') video(decodeURIComponent(b));
+  else if(a==='about') about();
+  else if(a==='apply-critic') applyCritic();
+  else if(a==='admin') location.replace(ADMIN_URL);
+  else if(a==='top') topRated();
+  else if(a==='list') list();
+  else if(a==='search') search(decodeURIComponent(b));
+  else home();
+}
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-sort]');if(a){F.sort=a.dataset.sort;F.genre=a.dataset.genre||'';F.decade=0;F.fresh=false;if(location.hash==='#/films')setTimeout(route,0);}});
+window.addEventListener('hashchange',()=>{route();window.scrollTo(0,0);});
+
+const qi=$('#q');
+qi.addEventListener('input',()=>{
+  const v=qi.value.trim();
+  const url=v?'#/search/'+encodeURIComponent(v):'#/';
+  if(location.hash.startsWith('#/search')) history.replaceState(null,'',url); else history.pushState(null,'',url);
+  route();
+});
+if(!LIVE) $('#cfgbar').hidden=false;
+rebuildFilms(); rebuildVideos(); paintAcct(); startAuth(); startData(); route();
+</script>
+</body>
+</html>
