@@ -434,6 +434,12 @@ h2{font-size:22px;font-weight:800}
       <li><a href="#/films" data-sort="score" data-genre="Thriller">Thriller</a></li>
       <li><a href="#/films" data-sort="score" data-genre="Historical">Historical</a></li>
       <li><a href="#/films" data-sort="score" data-genre="Family">Family</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Horror">Horror</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Mystery">Mystery</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Crime">Crime</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Sci-Fi">Sci-Fi</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Musical">Musical</a></li>
+      <li><a href="#/films" data-sort="score" data-genre="Biography">Biography</a></li>
     </ul></div>
     <div><h4>About</h4><ul>
       <li><a href="#/about">How scores work</a></li>
@@ -480,7 +486,21 @@ h2{font-size:22px;font-weight:800}
    videos/{id}  yt (YouTube video id), title, channel, desc      (id is always "v-" + the YouTube id)
    reviews/{filmId_uid}  ratings for films AND videos; scores are calculated from these only. */
 let FILMS=[], BY={}, VIDEOS=[], VBY={};
-const GENRES=['Action','Drama','Romance','Comedy','Thriller','Historical','Family'];
+const GENRES = [
+  'Action',
+  'Drama',
+  'Romance',
+  'Comedy',
+  'Thriller',
+  'Historical',
+  'Family',
+  'Horror',
+  'Mystery',
+  'Crime',
+  'Sci-Fi',
+  'Musical',
+  'Biography'
+];
 
 /* ---------- FIREBASE ----------
    1. Create a project at console.firebase.google.com and add a Web app.
