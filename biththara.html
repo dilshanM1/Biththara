@@ -108,10 +108,28 @@ h2{font-size:22px;font-weight:800}
 .trend a:hover{color:var(--ink);text-decoration:underline}
 
 /* hero carousel */
+/* hero carousel slideshow */
 .hero{position:relative;display:grid;border-radius:12px;overflow:hidden;color:#fff;background:var(--navy)}
-.slide{grid-area:1/1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:36px 48px 52px;
-  background:linear-gradient(110deg,var(--c1),var(--c2));opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
-.slide.on{opacity:1;visibility:visible}
+.slide{--hblur:1px;position:relative;overflow:hidden;min-height:400px;grid-area:1/1;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:48px 64px 64px;
+  background:linear-gradient(110deg,var(--c1),var(--c2));
+  opacity:0;visibility:hidden;
+  transform:translateX(100%);
+  transition:transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease, visibility 0.6s ease}
+
+/* Active slide */
+.slide.on{opacity:1;visibility:visible;transform:translateX(0%)}
+
+/* Previous slide sliding out to the left */
+.slide.prev{opacity:0;visibility:hidden;transform:translateX(-100%)}
+/* cover image: full size, blurred, behind the text */
+.hbg{position:absolute;left:-30px;top:-30px;width:calc(100% + 60px);height:calc(100% + 60px);max-width:none;object-fit:cover;filter:blur(var(--hblur)) saturate(1.15);pointer-events:none}
+.hshade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(6,12,20,.9) 0%,rgba(6,12,20,.62) 50%,rgba(6,12,20,.36) 100%),linear-gradient(0deg,rgba(6,12,20,.55),transparent 45%)}
+.slide.hasbg{background:#0B1522}
+.slide.hasbg::before{display:none}
+.snote{position:relative;margin:0 0 18px;max-width:46ch;opacity:.92;font-size:15px;line-height:1.55}
+.hnav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.38);color:#fff;font-size:24px;line-height:1;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.hnav:hover{background:rgba(0,0,0,.6)}
+.hnav.p{left:14px}.hnav.n{right:14px}
 .slide::before{content:"";position:absolute;right:-60px;top:-80px;width:420px;aspect-ratio:3/4;border:2px solid rgba(242,169,0,.28);border-radius:50% 50% 50% 50% / 62% 62% 38% 38%}
 .stext{position:relative;max-width:520px}
 .stext h2{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
@@ -120,7 +138,7 @@ h2{font-size:22px;font-weight:800}
 .ss{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:20px}
 .ss .sc small{color:rgba(255,255,255,.75)}
 .btn.or{background:var(--orange);border-color:var(--orange);color:var(--navy)}
-.sposter{position:relative;width:150px;flex:none;box-shadow:0 12px 30px rgba(0,0,0,.45);border-radius:6px}
+.sposter{position:relative;width:250px;flex:none;box-shadow:0 12px 30px rgba(0,0,0,.45);border-radius:6px}
 .dots{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:8px;z-index:2}
 .dots button{width:9px;height:9px;padding:0;border-radius:50%;border:0;background:rgba(255,255,255,.45);cursor:pointer}
 .dots button[aria-current="true"]{background:#fff;width:26px;border-radius:5px}
@@ -150,7 +168,8 @@ h2{font-size:22px;font-weight:800}
 .seemore a{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
 .seemore a::after{content:"›";display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--orange);color:var(--navy);line-height:1}
 @media (max-width:720px){
-  .slide{padding:28px 22px 48px}
+  .slide{padding:28px 22px 56px;min-height:340px}
+  .hnav{display:none}
   .sposter{display:none}
   .split{grid-template-columns:1fr}
   .gbtns{flex-direction:row;overflow-x:auto;order:-1;scrollbar-width:none}
@@ -655,9 +674,12 @@ function slideHTML(it,i,n){
   const sub=up?whenLine(f):metaLine(f);
   const extra=up?(f.trailer?'<div class="ss"><span class="sc">▶ <small>Trailer available</small></span></div>':'')
                 :`<div class="ss">${sc(c,'Critics')}${sc(a,'Audience')}</div>`;
-  return `<div class="slide${i?'':' on'}" style="--c1:${f.c[0]};--c2:${f.c[1]}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${n}" ${i?'aria-hidden="true"':''}>
-    <div class="stext"><span class="pill">${it.pill}</span><h2>${esc(f.en)}</h2>
-      <div class="sm">${esc(sub)}</div>${extra}
+  const bg=f.cover||f.poster;
+  const note=f.note?`<p class="snote">${esc(f.note.length>150?f.note.slice(0,150).trim()+'…':f.note)}</p>`:'';
+  return `<div class="slide${i?'':' on'}${bg?' hasbg':''}" style="--c1:${f.c[0]};--c2:${f.c[1]}" role="group" aria-roledescription="slide" aria-label="${i+1} of ${n}" ${i?'aria-hidden="true"':''}>
+    ${bg?`<img class="hbg" src="${esc(bg)}" alt="" ${i?'loading="lazy"':''}><div class="hshade"></div>`:''}
+    <div class="stext"><span class="pill">${esc(it.pill)}</span><h2>${esc(f.en)}</h2>
+      <div class="sm">${esc(sub)}</div>${note}${extra}
       <a class="btn or" href="#/film/${f.id}" ${i?'tabindex="-1"':''}>${up&&f.trailer?'Watch trailer':'View details'}</a></div>
     <a class="sposter" href="#/film/${f.id}" tabindex="-1" aria-hidden="true">${poster(f)}</a></div>`;
 }
@@ -669,7 +691,9 @@ function home(){
   const rel=released(), up=upcoming();
   if(!rel.length&&!up.length&&!VIDEOS.length){view.innerHTML=emptySite();return;}
   const rated=rel.filter(f=>avg(f)>=0).sort((a,b)=>avg(b)-avg(a));
-  let hero=(rated.length?rated:rel.slice().sort(byNewest)).slice(0,4).map(f=>({f,pill:rated.length?'Top rated':'New'}));
+  const curated=FILMS.filter(f=>f.hero).sort((a,b)=>a.heroOrder-b.heroOrder).slice(0,8);
+  let hero=curated.map(f=>({f,pill:isReleased(f)?'Featured':'Coming soon'}));
+  if(!hero.length) hero=(rated.length?rated:rel.slice().sort(byNewest)).slice(0,4).map(f=>({f,pill:rated.length?'Top rated':'New'}));
   if(!hero.length) hero=up.slice(0,4).map(f=>({f,pill:'Coming soon'}));
   const newest=rel.slice().sort(byNewest).slice(0,10);
   const picks=rel.filter(f=>critic(f).pct!=null).sort((a,b)=>critic(b).pct-critic(a).pct).slice(0,10);
@@ -683,6 +707,7 @@ function home(){
   if(trending.length) out.push(`<div class="trend"><b>Trending</b><div class="items">${trending.map(f=>`<a href="#/film/${f.id}">${esc(f.en)} · ${audience(f).pct}% audience score</a>`).join('')}</div></div>`);
   if(hero.length) out.push(`<section class="hero" aria-roledescription="carousel" aria-label="Featured films">
     ${hero.map((it,i)=>slideHTML(it,i,hero.length)).join('')}
+    ${hero.length>1?'<button class="hnav p" type="button" aria-label="Previous film">‹</button><button class="hnav n" type="button" aria-label="Next film">›</button>':''}
     <div class="dots">${hero.map((it,i)=>`<button aria-label="Show ${esc(it.f.en)}" aria-current="${i===0}"></button>`).join('')}</div></section>`);
   if(anyRated) out.push(`<div class="legend sm">${legendHTML()}</div>`);
   if(newest.length) out.push(`<section class="hsec">${secHead('New releases','The newest Sinhala films on biththara. Check the scores and reviews before you decide what to watch.','new','')}${rowHTML(newest)}</section>`);
@@ -695,6 +720,7 @@ function home(){
   view.innerHTML=out.join('');
 
   const slides=[...view.querySelectorAll('.slide')], dots=[...view.querySelectorAll('.dots button')];
+  view.querySelectorAll('.hbg').forEach(im=>im.addEventListener('error',()=>{const sl=im.closest('.slide');im.remove();const sh=sl&&sl.querySelector('.hshade');if(sh)sh.remove();if(sl)sl.classList.remove('hasbg');}));
   if(slides.length){
     let cur=0;
     const show=i=>{
@@ -704,7 +730,13 @@ function home(){
     };
     const start=()=>{if(REDUCE||heroTimer||slides.length<2)return;heroTimer=setInterval(()=>show(cur+1),5500);};
     dots.forEach((d,k)=>d.onclick=()=>{show(k);});
+    const hp=view.querySelector('.hnav.p'), hn=view.querySelector('.hnav.n');
+    if(hp) hp.onclick=()=>show(cur-1);
+    if(hn) hn.onclick=()=>show(cur+1);
     const h=view.querySelector('.hero');
+    let sx=null;
+    h.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;},{passive:true});
+    h.addEventListener('touchend',e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50)show(cur+(dx<0?1:-1));},{passive:true});
     h.addEventListener('mouseenter',stopHero); h.addEventListener('mouseleave',start);
     h.addEventListener('focusin',stopHero); h.addEventListener('focusout',start);
     start();
@@ -1103,12 +1135,13 @@ function softRefresh(){
   else if(r==='list'||r==='apply-critic') route();
 }
 
-/* films and videos come from Firestore (added in admin.html); every field is validated before use */
+/* films: also cover (wide image), hero (show in home slider) and heroOrder, all set from admin.html
+   films and videos come from Firestore (added in admin.html); every field is validated before use */
 const SLUG=/^[a-z0-9-]{1,60}$/, HEX=/^#[0-9a-fA-F]{6}$/, URLRE=/^https?:\/\//i;
 const str=(v,n)=>typeof v==='string'?v.trim().slice(0,n):'';
 function normFilm(id,d){
   if(!SLUG.test(id)) return null;
-  const f={id,en:str(d.en,120)||id,si:str(d.si,120),y:null,dir:str(d.dir,120),g:[],note:str(d.note,1500),cast:[],c:['#1B3A5C','#0C1827'],poster:'',
+  const f={id,en:str(d.en,120)||id,si:str(d.si,120),y:null,dir:str(d.dir,120),g:[],note:str(d.note,1500),cast:[],c:['#1B3A5C','#0C1827'],poster:'',cover:'',hero:d.hero===true,heroOrder:Number.isFinite(d.heroOrder)?d.heroOrder:1e9,
     status:d.status==='unreleased'?'unreleased':'released',
     releaseDate:DATE_RE.test(d.releaseDate||'')?d.releaseDate:'',
     trailer:YT_RE.test(d.trailer||'')?d.trailer:''};
@@ -1116,6 +1149,7 @@ function normFilm(id,d){
   if(Array.isArray(d.g)) f.g=d.g.filter(x=>GENRES.includes(x));
   if(Array.isArray(d.c)&&d.c.length===2&&d.c.every(x=>HEX.test(x))) f.c=d.c.slice();
   if(typeof d.poster==='string'&&URLRE.test(d.poster)) f.poster=d.poster;
+  if(typeof d.cover==='string'&&URLRE.test(d.cover)) f.cover=d.cover;
   if(Array.isArray(d.cast)) f.cast=d.cast.filter(a=>a&&typeof a.actor==='string'&&a.actor.trim()).slice(0,40).map(a=>({
     actor:a.actor.trim().slice(0,80),role:str(a.role,80),photo:typeof a.photo==='string'&&URLRE.test(a.photo)?a.photo:''}));
   return f;
